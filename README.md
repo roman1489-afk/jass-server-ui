@@ -2,7 +2,7 @@
 
 ### Deployment
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy) [![Greenkeeper badge](https://badges.greenkeeper.io/JoelNiklaus/jass-server.svg)](https://greenkeeper.io/)
 
 ### Wiki
 https://github.com/webplatformz/challenge/wiki
