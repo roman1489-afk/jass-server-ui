@@ -1,7 +1,5 @@
 # Jass Challenge [![Build Status](https://travis-ci.org/webplatformz/challenge.svg?branch=master)](https://travis-ci.org/webplatformz/challenge)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/webplatformz/challenge.svg)](https://greenkeeper.io/)
-
 ### Deployment
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
