@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import nameGenerator from 'docker-namesgenerator';
 
 const clientRequestTimeoutInMillis = 500;
+const deckShuffleSeed = 42;
 
 function getPairingsPerRound(players) {
     return _.flatMap(players, (player, index) => {
@@ -193,7 +194,7 @@ const TournamentSession = {
                         sessionPromise = this.handlePairingWithDisconnectedClients(pairing);
                     } else {
                         const singleGameSession = createSessionWithPlayers(pairing);
-                        sessionPromise = singleGameSession.start()
+                        sessionPromise = singleGameSession.start(deckShuffleSeed)
                             .then(this.handleSessionFinish.bind(this, pairing), this.handleSessionFinish.bind(this, pairing))
                             .then(() => singleGameSession.dispose());
                     }
