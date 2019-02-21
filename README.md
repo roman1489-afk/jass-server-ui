@@ -1,4 +1,4 @@
-# Jass Challenge [![Build Status](https://travis-ci.org/webplatformz/challenge.svg?branch=master)](https://travis-ci.org/webplatformz/challenge)
+# Jass Challenge [![Build Status](https://travis-ci.org/JoelNiklaus/jass-server.svg?branch=master)](https://travis-ci.org/JoelNiklaus/jass-server)
 
 ### Deployment
 
