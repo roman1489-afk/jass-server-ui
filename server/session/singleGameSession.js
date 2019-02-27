@@ -5,7 +5,7 @@ import * as Team from '../game/player/team';
 import {SessionType} from '../../shared/session/sessionType';
 import SessionHandler from './sessionHandler';
 import {MessageType} from '../../shared/messages/messageType';
-import {startRandomBot} from '../bot/botStarter';
+import {startJassTheRipperBot, startRandomBot} from '../bot/botStarter';
 import {Logger} from '../logger';
 import EnvironmentUtil from '../registry/environmentUtil';
 import * as JsonResultProxy from '../communication/jsonResultProxy';
@@ -143,7 +143,8 @@ const Session = {
 
         this.joinBotListeners.push(this.clientApi.subscribeMessage(webSocket, MessageType.JOIN_BOT, (message) => {
             message.data.url = `ws://localhost:${EnvironmentUtil.getPort()}`;
-            startRandomBot(message.data);
+            startJassTheRipperBot(message.data);
+            //startRandomBot(message.data);
         }));
     },
 
