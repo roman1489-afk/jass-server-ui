@@ -38,6 +38,12 @@ Start the server:
 ```sh
 $ npm start
 ```
+
+Run the server as a background process on a production server:
+```sh
+$ sudo nohup sh start.sh &
+```
+
 ### Docker Container
 If you want to run the server in a docker container you can find a Dockerfile in this repo.
 
@@ -61,6 +67,10 @@ There are some env variables you can set to alter the behaviour of the server.
 
   Boolean, if set to true, the server will count all modes without any multiplications (e.g. factor 3 for obenabe or undenufe will not be used).
   
+* PORT
+
+  Integer, the port to run the server on
+
 ## Development
 While developing you might want to run the server with a watch task. You can either use:
 ```sh
