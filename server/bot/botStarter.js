@@ -6,15 +6,21 @@ export function startRandomBot({url, sessionName, chosenTeamIndex}) {
 }
 
 export function startJassTheRipperBot({url, sessionName, chosenTeamIndex}) {
-	console.log('Bot started');
-	const { exec } = require('child_process');
+	console.log('Starting Bot...');
 
-	exec('cd ../JassTheRipper && ./gradlew run -Pmyargs=ws://127.0.0.1 --no-daemon', (error, stdout, stderr) => {
-		if (error) {
-			console.error(`exec error: ${error}`);
-			return;
-		}
-		console.log(`stdout: ${stdout}`);
-		console.log(`stderr: ${stderr}`);
+	const {exec} = require('child_process');
+	let botProcess = exec('cd ../JassTheRipper && ./gradlew run -Pmyargs=ws://127.0.0.1 --no-daemon');
+
+
+	botProcess.stdout.on('data', function (data) {
+		console.log(data);
+	});
+
+	botProcess.stderr.on('data', function (data) {
+		console.log('stderr: ' + data.toString());
+	});
+
+	botProcess.on('exit', function (code) {
+		console.log('child process exited with code ' + code.toString());
 	});
 }
