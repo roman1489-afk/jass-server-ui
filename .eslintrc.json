@@ -24,7 +24,7 @@
     "import/no-named-as-default": 2,
     "import/no-named-as-default-member": 2,
     "import/no-unresolved": [2, { "commonjs": true }],
-    "no-console": 2
+    "no-console": 0
   },
   "plugins": [
     "import",
