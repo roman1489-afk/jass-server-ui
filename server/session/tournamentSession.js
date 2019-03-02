@@ -5,9 +5,10 @@ import * as RankingTable from './rankingTable';
 import * as SingleGameSession from './singleGameSession';
 import * as _ from 'lodash';
 import nameGenerator from 'docker-namesgenerator';
+import EnvironmentUtil from '../registry/environmentUtil';
 
-const clientRequestTimeoutInMillis = 5000; // normal: 500, high so that failures happen less often due to players exceeding request timeout
-const deckShuffleSeed = 42;
+const clientRequestTimeoutInMillis = EnvironmentUtil.getClientRequestTimeoutInMillis();
+const deckShuffleSeed = EnvironmentUtil.getDeckShuffleSeed();
 
 function getPairingsPerRound(players) {
     return _.flatMap(players, (player, index) => {
