@@ -39,6 +39,11 @@ Start the server:
 $ npm start
 ```
 
+Add any environment variables with 'env' (check environmentUtil.js for available ENV variables):
+```sh
+$ env TOURNAMENT_LOGGING=true PORT=80 MAX_POINTS=1000 npm start
+```
+
 Run the server as a background process on a production server:
 ```sh
 $ sudo nohup sh start.sh &
