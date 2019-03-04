@@ -2,14 +2,15 @@ import {create as createJassBot} from '../../bot/JassBot';
 import nameGenerator from 'docker-namesgenerator';
 
 export function startRandomBot({url, sessionName, chosenTeamIndex}) {
+	console.log('Starting Random Bot...');
 	createJassBot(nameGenerator(), url, sessionName, chosenTeamIndex);
 }
 
 export function startJassTheRipperBot({url, sessionName, chosenTeamIndex}) {
-	console.log('Starting Bot...');
+	console.log('Starting JassTheRipper Bot...');
 
 	const {exec} = require('child_process');
-	let botProcess = exec('cd ../JassTheRipper && ./gradlew run -Pmyargs=ws://127.0.0.1 --no-daemon');
+	let botProcess = exec(`cd ../JassTheRipper && ./gradlew run -Pmyargs=${url},${chosenTeamIndex} --no-daemon`);
 
 
 	botProcess.stdout.on('data', function (data) {
