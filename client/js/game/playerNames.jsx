@@ -1,9 +1,15 @@
 import React from 'react';
 import JassActions from '../jassActions';
 
-function addBot(sessionName, seatId, playerBoxId) {
+function addBot(sessionName, seatId, playerBoxId, botStartingMessage) {
 	JassActions.joinBot(sessionName, Number(seatId) % 2);
-	document.getElementById(playerBoxId).innerText = 'Bot Starting ...';
+	document.getElementById(playerBoxId).innerText = botStartingMessage;
+	setTimeout(() => {
+		if (document.getElementById(playerBoxId).innerText === botStartingMessage) {
+			botStartingMessage = 'Bot crashed! Restarting bot now...';
+			addBot(sessionName, seatId, playerBoxId, botStartingMessage);
+		}
+	}, 15000);
 }
 
 function isSeatOccupiedOrNotAllowedForBot(players, player) {
@@ -28,6 +34,8 @@ export default (props) => {
 	return (
 		<div id="playerNames">
 			{players.map((player, index) => {
+				let botStartingMessage = 'Bot Starting ...';
+
 				let classes = [];
 				let addBotClasses = [];
 
@@ -50,7 +58,8 @@ export default (props) => {
 						<span>{player.name}</span>
 						<span title="Add bot player" className={addBotClasses.join(' ')}>
 							&nbsp;or&nbsp;
-							<button id={'add-bot-button'} onClick={() => addBot(props.chosenSession, player.seatId, playerBoxId)}>
+							<button id={'add-bot-button'}
+									onClick={() => addBot(props.chosenSession, player.seatId, playerBoxId, botStartingMessage)}>
 								Add Bot <img className={'add-bot-icon'} src="./images/robot.svg"/>
 							</button>
 						</span>
