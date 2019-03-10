@@ -116,7 +116,7 @@ const ServerApi = {
         }
     },
     handleErrorFromServer: () => {
-        JassActions.throwError('WEBSOCKET', 'The connection to the server has been lost!');
+        JassActions.throwError('WEBSOCKET', 'The connection to the server has been lost! Make sure you are NOT connected to any Virtual Private Network (VPN)!');
     },
 
     connect: () => {
