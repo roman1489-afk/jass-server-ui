@@ -59,7 +59,8 @@ export default (props) => {
 						<span title="Add bot player" className={addBotClasses.join(' ')}>
 							&nbsp;or&nbsp;
 							<button id={'add-bot-button'}
-									onClick={() => addBot(props.chosenSession, player.seatId, playerBoxId, botStartingMessage)}>
+									onClick={() => addBot(props.chosenSession, player.seatId, playerBoxId, botStartingMessage)}
+							>
 								Add Bot <img className={'add-bot-icon'} src="./images/robot.svg"/>
 							</button>
 						</span>
