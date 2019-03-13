@@ -23,16 +23,19 @@ export default (props) => {
             <h1 className="jumbotron">Choose Session</h1>
             <ExistingSessions sessions={props.setupState.sessions}/>
             <div className="session-choice">
-                <input type="text" name="createNewSession" placeholder="Session Name..."
+                <h2>Start a fresh single game</h2>
+                <input type="text" name="createNewSession" placeholder="Single Game Name..."
                        onKeyPress={(event) => createNewSession(SessionType.SINGLE_GAME, false, event)}
                 />
             </div>
             <div className="session-choice">
+				<h2>Start a fresh tournament</h2>
                 <input type="text" name="createNewTournament" placeholder="Tournament Name..."
                        onKeyPress={(event) => createNewSession(SessionType.TOURNAMENT, true, event)}
                 />
             </div>
             <div className="session-choice">
+				<h4>Join an existing single game or tournament or create a new one if none is running</h4>
                 <button type="button" name="autoJoin" onClick={JassActions.autojoinSession}>Just Join!</button>
             </div>
         </div>

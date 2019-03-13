@@ -71,15 +71,15 @@ describe('ChooseSession Component', () => {
         shallowRenderer.render(React.createElement(ChooseSession, { setupState: { status: GameSetupState.CHOOSE_SESSION }}));
         let actual = shallowRenderer.getRenderOutput();
 
-        let newSessionInput = actual.props.children[2].props.children;
+        let newSessionInput = actual.props.children[2].props.children[1];
         newSessionInput.props.onKeyPress({target:{value:'testSingle'}, charCode:13});
         sinon.assert.calledWith(createNewSessionSpy, SessionType.SINGLE_GAME, 'testSingle', false);
 
-        let newTournamentInput = actual.props.children[3].props.children;       
+        let newTournamentInput = actual.props.children[3].props.children[1];
         newTournamentInput.props.onKeyPress({target:{value:'testTournament'}, charCode:13});
         sinon.assert.calledWith(createNewSessionSpy, SessionType.TOURNAMENT, 'testTournament', true);
 
-        let autojoinInput = actual.props.children[4].props.children;
+        let autojoinInput = actual.props.children[4].props.children[1];
         expect(autojoinInput.props.onClick).to.equal(JassActions.autojoinSession);
     });
 
@@ -94,7 +94,7 @@ describe('ChooseSession Component', () => {
 
         beforeEach(() => {
             shallowRenderer.render(React.createElement(ChooseSession, { setupState: { status: GameSetupState.CHOOSE_SESSION }}));
-            createNewSession = shallowRenderer.getRenderOutput().props.children[2].props.children.props.onKeyPress;
+            createNewSession = shallowRenderer.getRenderOutput().props.children[2].props.children[1].props.onKeyPress;
         });
 
         it('should not start action with keypress which is not Enter', () => {
