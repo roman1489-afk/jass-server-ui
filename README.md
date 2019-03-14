@@ -46,7 +46,8 @@ $ env TOURNAMENT_LOGGING=true PORT=80 MAX_POINTS=1000 npm start
 
 Run the server as a background process on a production server:
 ```sh
-$ sudo nohup sh start.sh &
+$ sudo npm run start # this has to be run first in order to build the app
+$ sudo nohup sh start.sh &  
 ```
 
 ### Docker Container
@@ -106,6 +107,12 @@ or if you just want to start the server without watching and debug output use:
 
 ```sh
 $ npm start
+```
+
+## Experiments
+In order to see how many times the bots lost navigate into the folder with the results and run the following command:
+```sh
+$ grep -or "BROADCAST_WINNER_TEAM\",\"data\":{\"name\":\"Team 1\",\"points\":.*" .
 ```
 
 ## TechStack
