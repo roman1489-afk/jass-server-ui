@@ -31,24 +31,23 @@ describe('ExistingSessions Component', () => {
         let actual = shallowRenderer.getRenderOutput();
 
         expect(actual.type).to.equal('div');
-        expect(actual.props.className).to.equal('session-choice');
-        expect(actual.props.children.type).to.equal('ul');
-        expect(actual.props.children.props.className).to.equal('hidden');
+        expect(actual.props.className).to.equal('session-choice hidden');
     });
 
     it('should show the list when there are existing sessions', () => {
         shallowRenderer.render(React.createElement(ExistingSessions, { sessions: ['sessionName']}));
         let actual = shallowRenderer.getRenderOutput();
 
-        let list = actual.props.children;
-        expect(list.props.className).to.equal('');
+        let list = actual.props.children[1];
+        console.log(list);
+        expect(list.type).to.equal('ul');
     });
 
     it('should append sessions and add event listeners to them', () => {
         shallowRenderer.render(React.createElement(ExistingSessions, { sessions: ['sessionName', 'sessionName2']}));
         let actual = shallowRenderer.getRenderOutput();
 
-        let list = actual.props.children;
+        let list = actual.props.children[1];
         expect(list.props.children.length).to.equal(2);
         let secondSession = list.props.children[1];
         expect(secondSession.type).to.equal('li');
@@ -59,7 +58,7 @@ describe('ExistingSessions Component', () => {
         playerJoin.props.onClick();
         const spyWithArgs = joinExistingSessionSpy.withArgs('sessionName2');
         sinon.assert.calledOnce(spyWithArgs);
-        expect(spectatorJoin.props.children).to.equal('S');
+        expect(spectatorJoin.props.children).to.equal('as spectator');
 
         spectatorJoin.props.onClick();
         sinon.assert.calledOnce(joinExistingSessionAsSepctatorSpy);
