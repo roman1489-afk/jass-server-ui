@@ -173,7 +173,11 @@ const Session = {
 		if (tournamentLogging) {
 			let fs = require('fs');
 			fs.mkdirSync(tournamentLoggingDir, {recursive: true});
-			resultProxy = JsonResultProxy.create(`${tournamentLoggingDir}/${this.players[0].name}.vs.${this.players[1].name}.${new Date().toISOString()}`);
+			// set local time
+			let dateInCurrentTimeZone = new Date();
+			let hoursOffset = (dateInCurrentTimeZone.getTimezoneOffset()/60)*(-1);
+			dateInCurrentTimeZone.setHours(dateInCurrentTimeZone.getHours() + hoursOffset);
+			resultProxy = JsonResultProxy.create(`${tournamentLoggingDir}/${this.players[0].name}.vs.${this.players[1].name}.${dateInCurrentTimeZone.toISOString()}`);
 			this.clientApi.setCommunicationProxy(resultProxy);
 		}
 		this.clientApi.broadcastTeams(createTeamsArrayForClient(this));
