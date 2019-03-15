@@ -1,7 +1,8 @@
 /*eslint no-console: 0*/
 import chalk from 'chalk';
+import EnvironmentUtil from './registry/environmentUtil';
 
-const debug = Boolean(process.env.DEBUG);
+const debug = Boolean(EnvironmentUtil.getDebug());
 
 export const Logger = {
     debug (messageToLog) {

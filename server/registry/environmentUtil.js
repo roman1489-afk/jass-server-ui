@@ -15,12 +15,24 @@ const EnvironmentUtil = {
 		return Boolean(process.env.TOURNAMENT_LOGGING) || true;
 	},
 
+	getTournamentCounting() {
+		return Boolean(process.env.TOURNAMENT_COUNTING) || false;
+	},
+
+	getTournamentRounds() {
+		return process.env.TOURNAMENT_ROUNDS || 1;
+	},
+
 	getTournamentLoggingDir() {
 		return process.env.TOURNAMENT_LOGGING_DIR || 'experiments';
 	},
 
 	getPort() {
 		return process.env.PORT || 3000;
+	},
+
+	getDebug() {
+		return Boolean(process.env.DEBUG) || false;
 	},
 
 	getPublicServerAddress() {

@@ -2,6 +2,7 @@
 
 import {GameMode} from '../../../shared/game/gameMode';
 import {CardColor} from '../../../shared/deck/cardColor';
+import EnvironmentUtil from '../../registry/environmentUtil';
 
 
 const nonTrumpCardValues = {
@@ -54,7 +55,7 @@ const undeufeCardValues = {
 
 
 const calculateMultiplicator = function calculateMultiplicator(mode, gameTrumpf) {
-    if (Boolean(process.env.TOURNAMENT_COUNTING) === true) {
+    if (Boolean(EnvironmentUtil.getTournamentCounting()) === true) {
         return 1;
     } else if (mode === GameMode.OBEABE || mode === GameMode.UNDEUFE) {
         return 3;
