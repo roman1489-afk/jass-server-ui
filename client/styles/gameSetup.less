@@ -5,6 +5,7 @@
   bottom: 0;
   left: 0;
   z-index: 1;
+  overflow-y: scroll;
 
   @media @phone {
     font-size: 24px;
@@ -118,6 +119,9 @@
 
     input[type=text] {
       max-width: 500px;
+      @media @phone {
+        max-width: 90%;
+      }
     }
   }
 
