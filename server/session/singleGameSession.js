@@ -175,7 +175,7 @@ const Session = {
 			fs.mkdirSync(tournamentLoggingDir, {recursive: true});
 			// set local time
 			let dateInCurrentTimeZone = new Date();
-			let hoursOffset = (dateInCurrentTimeZone.getTimezoneOffset()/60)*(-1);
+			let hoursOffset = (dateInCurrentTimeZone.getTimezoneOffset() / 60) * (-1);
 			dateInCurrentTimeZone.setHours(dateInCurrentTimeZone.getHours() + hoursOffset);
 			resultProxy = JsonResultProxy.create(`${tournamentLoggingDir}/${this.players[0].name}.vs.${this.players[1].name}.${dateInCurrentTimeZone.toISOString()}`);
 			this.clientApi.setCommunicationProxy(resultProxy);
@@ -234,8 +234,10 @@ const Session = {
 				return this.teams[1];
 			}
 
-			// Increase seed with every round, so that we get different cards each round
-			return this.gameCycle(seed + 1, this.getNextStartingPlayer());
+			// If there is a seed set
+			if (seed !== 0)
+				seed++; // Increase seed with every round, so that we get different cards each round
+			return this.gameCycle(seed, this.getNextStartingPlayer());
 		});
 	},
 

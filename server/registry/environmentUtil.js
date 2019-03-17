@@ -4,7 +4,7 @@ const EnvironmentUtil = {
 	},
 
 	getDeckShuffleSeed() {
-		return process.env.DECK_SHUFFLE_SEED || 42;
+		return process.env.DECK_SHUFFLE_SEED || 42; // 0 for totally random shuffling, any other number for the same sequence of hands
 	},
 
 	getClientRequestTimeoutInMillis() {
