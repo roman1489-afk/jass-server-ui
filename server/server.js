@@ -10,15 +10,16 @@ export function start(port, app) {
 
 	try {
 		// Run These commands on the production server to generate the certificates
-		// sudo certbot certonly --webroot -w /var/www/jass.joeli.to/ -d www.jass.joeli.to -d jass.joeli.to
+		// sudo certbot certonly --manual
+		// or sudo certbot certonly --standalone -d jass.joeli.to
 		// openssl dhparam -out /var/www/jass.joeli.to/sslcert/dh-strong.pem 2048
 
 		Logger.info('Trying to start https server');
 		let fs = require('fs');
 		const options = {
-			key: fs.readFileSync('/srv/www/keys/my-site-key.pem'),
-			cert: fs.readFileSync('/srv/www/keys/chain.pem'),
-			dhparam: fs.readFileSync('/var/www/jass.joeli.to/sslcert/dh-strong.pem')
+			key: fs.readFileSync('/etc/letsencrypt/live/jass.joeli.to/privkey.pem'),
+			cert: fs.readFileSync('/etc/letsencrypt/live/jass.joeli.to/fullchain.pem'),
+			//dhparam: fs.readFileSync('/var/www/jass.joeli.to/sslcert/dh-strong.pem')
 		};
 
 		let helmet = require('helmet');
@@ -31,7 +32,6 @@ export function start(port, app) {
 
 		server = http.createServer(app);
 	}
-
 
     new WebSocketServer({server}).on('connection', (ws) => {
         SessionHandler.handleClientConnection(ws);
