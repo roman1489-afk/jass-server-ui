@@ -1,14 +1,14 @@
 const EnvironmentUtil = {
 	getMaxPoints() {
-		return process.env.MAX_POINTS || 2500;
+		return Number(process.env.MAX_POINTS) || 2500;
 	},
 
 	getDeckShuffleSeed() {
-		return process.env.DECK_SHUFFLE_SEED || 42;
+		return Number(process.env.DECK_SHUFFLE_SEED) || 42;
 	},
 
 	getClientRequestTimeoutInMillis() {
-		return process.env.CLIENT_REQUEST_TIMEOUT_IN_MILLIS || 5000; //normal: 500, high so that failures happen less often due to players exceeding request timeout
+		return Number(process.env.CLIENT_REQUEST_TIMEOUT_IN_MILLIS) || 5000; // normal: 500, high so that failures happen less often due to players exceeding request timeout
 	},
 
 	getTournamentLogging() {
@@ -20,7 +20,7 @@ const EnvironmentUtil = {
 	},
 
 	getPort() {
-		return process.env.PORT || 3000;
+		return Number(process.env.PORT) || 3000;
 	},
 
 	getPublicServerAddress() {
