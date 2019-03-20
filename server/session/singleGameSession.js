@@ -234,8 +234,8 @@ const Session = {
 				return this.teams[1];
 			}
 
-			// If there is a seed set
-			if (seed !== 0)
+			// If there is a seed set (has to be a positive number!)
+			if (seed > 0)
 				seed++; // Increase seed with every round, so that we get different cards each round
 			return this.gameCycle(seed, this.getNextStartingPlayer());
 		});

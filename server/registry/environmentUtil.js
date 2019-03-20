@@ -4,11 +4,11 @@ const EnvironmentUtil = {
 	},
 
 	getDeckShuffleSeed() {
-		return process.env.DECK_SHUFFLE_SEED || 42; // 0 for totally random shuffling, any other number for the same sequence of hands
+		return process.env.DECK_SHUFFLE_SEED || 0; // 0 for totally random shuffling, any positive (!) number for the same sequence of hands (only in the tournament mode!)
 	},
 
 	getClientRequestTimeoutInMillis() {
-		return process.env.CLIENT_REQUEST_TIMEOUT_IN_MILLIS || 5000; //normal: 500, high so that failures happen less often due to players exceeding request timeout
+		return process.env.CLIENT_REQUEST_TIMEOUT_IN_MILLIS || 15000; //normal: 500, high so that failures happen less often due to players exceeding request timeout
 	},
 
 	getTournamentLogging() {
