@@ -4,9 +4,8 @@ import JassActions from '../jassActions';
 import * as messages from '../../../shared/messages/messages';
 import {MessageType} from '../../../shared/messages/messageType';
 import {SessionChoice} from '../../../shared/session/sessionChoice';
-import EnvironmentUtil from '../../../server/registry/environmentUtil';
 
-const protocol = (EnvironmentUtil.getPort() === 443) ? 'wss' : 'ws';
+const protocol = location.protocol === 'https:' ? 'wss' : 'ws';
 const serverAddress = `${protocol}://${window.location.host}`;
 
 let webSocket;
