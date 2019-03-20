@@ -14,7 +14,7 @@ export function start(port, app) {
 		// or sudo certbot certonly --standalone -d jass.joeli.to
 		// openssl dhparam -out /var/www/jass.joeli.to/sslcert/dh-strong.pem 2048
 
-		Logger.info('Trying to start https server');
+		Logger.info('Starting https server...');
 		let fs = require('fs');
 		const options = {
 			key: fs.readFileSync('/etc/letsencrypt/live/jass.joeli.to/privkey.pem'),

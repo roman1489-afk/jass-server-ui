@@ -1,6 +1,8 @@
 import nameGenerator from 'docker-namesgenerator';
 import * as JassBot from './JassBot';
 
+let nameOfBot = 'JassBot';
+
 let numberOfBotsToStartFromCommandLine = process.argv[2];
 let defaultNumberOfBotsToStartFromCommandLine = 4;
 
