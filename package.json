@@ -30,6 +30,7 @@
     "prestart": "npm run build",
     "start": "node build/server/app.js",
     "start:80": "cross-env PORT=80 npm start",
+    "start:443": "cross-env PORT=443 npm start",
     "start:tournament": "cross-env TOURNAMENT_LOGGING=true TOURNAMENT_ROUNDS=5 TOURNAMENT_COUNTING=true npm start",
     "start:tournament:debug": "cross-env DEBUG=true TOURNAMENT_LOGGING=true TOURNAMENT_ROUNDS=5 TOURNAMENT_COUNTING=true npm start -- --debug --debug-brk=5858",
     "start:watch": "nodemon -e js,jsx,less --watch server --watch shared --watch client --exec \"npm run start\"",
@@ -69,6 +70,8 @@
     "flux": "3.1.2",
     "font-awesome": "4.7.0",
     "glicko2": "0.8.4",
+    "helmet": "^3.16.0",
+    "https": "^1.0.0",
     "less": "2.7.2",
     "lodash": "^4.17.11",
     "mkdirp": "0.5.1",
@@ -79,9 +82,9 @@
     "react-dom": "15.6.1",
     "request": "^2.88.0",
     "rimraf": "2.6.1",
+    "seededshuffle": "^0.2.0",
     "sinon": "2.3.5",
     "validate.js": "0.11.1",
-    "ws": "2.3.1",
-    "seededshuffle": "^0.2.0"
+    "ws": "2.3.1"
   }
 }

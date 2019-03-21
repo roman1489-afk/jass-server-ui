@@ -143,7 +143,8 @@ const Session = {
 		registerClientAndBroadcastSessionJoined(this, webSocket, player);
 
 		this.joinBotListeners.push(this.clientApi.subscribeMessage(webSocket, MessageType.JOIN_BOT, (message) => {
-			message.data.url = `ws://localhost:${EnvironmentUtil.getPort()}`;
+			let protocol = EnvironmentUtil.getPort() === 443 ? 'wss' : 'ws';
+			message.data.url = `${protocol}://localhost:${EnvironmentUtil.getPort()}`;
 			startJassTheRipperBot(message.data);
 			//startRandomBot(message.data);
 		}));
