@@ -12,7 +12,6 @@ export function startJassTheRipperBot({url, sessionName, chosenTeamIndex}) {
 	const {exec} = require('child_process');
 	let botProcess = exec(`cd ../JassTheRipper && ./gradlew run -Pmyargs=${url},${chosenTeamIndex} --no-daemon`);
 
-
 	botProcess.stdout.on('data', function (data) {
 		console.log(data);
 	});
@@ -21,7 +20,7 @@ export function startJassTheRipperBot({url, sessionName, chosenTeamIndex}) {
 		console.log('stderr: ' + data.toString());
 	});
 
-	botProcess.on('exit', function (code) {
-		console.log('child process exited with code ' + code.toString());
+	botProcess.on('exit', function () {
+		console.log('JassTheRipper left the game.');
 	});
 }
