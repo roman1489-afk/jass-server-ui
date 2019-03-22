@@ -16,7 +16,7 @@ export default (props) => {
     }
 
     if (props.state === GameState.STICH) {
-        setTimeout(() => JassActions.collectStich(), 2000);
+        setTimeout(() => JassActions.collectStich(), 2500);
     }
 
     let imagePath = '/images/cards/' + props.cardType + '/';

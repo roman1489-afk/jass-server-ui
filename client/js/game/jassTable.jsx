@@ -42,6 +42,7 @@ export default React.createClass({
                     nextStartingPlayerIndex={state.nextStartingPlayerIndex}
                     mode={state.mode}
                     color={state.color}
+                    isGeschoben={state.isGeschoben}
                     roundPlayerIndex={state.roundPlayerIndex}
                     collectStich={state.collectStich}
                     chosenSession={state.chosenSession}

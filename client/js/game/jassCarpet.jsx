@@ -7,6 +7,7 @@ import Trumpf from './trumpf.jsx';
 export default ({
                     color,
                     mode,
+                    isGeschoben,
                     cards,
                     players,
                     nextStartingPlayerIndex,
@@ -35,7 +36,7 @@ export default ({
                     collectStich={collectStich}
                     state={status}
         />
-        <Trumpf mode={mode} color={color} cardType={cardType} />
+        <Trumpf mode={mode} color={color} cardType={cardType} isGeschoben={isGeschoben} />
         <LastStich cards={lastStichCards}
                    state={status}
                    cardType={cardType}

@@ -16,7 +16,7 @@ describe('PlayerNames Component', () => {
 
     it('should render an img element with className hidden without given mode', () => {
         shallowRenderer.render(React.createElement(Trumpf));
-        let actual = shallowRenderer.getRenderOutput();
+        let actual = shallowRenderer.getRenderOutput().props.children[1];
 
         expect(actual.type).to.equal('img');
         expect(actual.props.id).to.equal('trumpf');
@@ -31,7 +31,7 @@ describe('PlayerNames Component', () => {
         };
 
         shallowRenderer.render(React.createElement(Trumpf, props));
-        let actual = shallowRenderer.getRenderOutput();
+        let actual = shallowRenderer.getRenderOutput().props.children[1];
 
         expect(actual.type).to.equal('img');
         expect(actual.props.id).to.equal('trumpf');
@@ -47,7 +47,7 @@ describe('PlayerNames Component', () => {
         };
 
         shallowRenderer.render(React.createElement(Trumpf, props));
-        let actual = shallowRenderer.getRenderOutput();
+        let actual = shallowRenderer.getRenderOutput().props.children[1];
 
         expect(actual.type).to.equal('img');
         expect(actual.props.id).to.equal('trumpf');
@@ -63,7 +63,7 @@ describe('PlayerNames Component', () => {
         };
 
         shallowRenderer.render(React.createElement(Trumpf, props));
-        let actual = shallowRenderer.getRenderOutput();
+        let actual = shallowRenderer.getRenderOutput().props.children[1];
 
         expect(actual.type).to.equal('img');
         expect(actual.props.id).to.equal('trumpf');
@@ -79,7 +79,7 @@ describe('PlayerNames Component', () => {
         };
 
         shallowRenderer.render(React.createElement(Trumpf, props));
-        let actual = shallowRenderer.getRenderOutput();
+        let actual = shallowRenderer.getRenderOutput().props.children[1];
 
         expect(actual.type).to.equal('img');
         expect(actual.props.id).to.equal('trumpf');
@@ -93,7 +93,7 @@ describe('PlayerNames Component', () => {
         };
 
         shallowRenderer.render(React.createElement(Trumpf, props));
-        let actual = shallowRenderer.getRenderOutput();
+        let actual = shallowRenderer.getRenderOutput().props.children[1];
 
         expect(actual.type).to.equal('img');
         expect(actual.props.id).to.equal('trumpf');
@@ -107,7 +107,7 @@ describe('PlayerNames Component', () => {
         };
 
         shallowRenderer.render(React.createElement(Trumpf, props));
-        let actual = shallowRenderer.getRenderOutput();
+        let actual = shallowRenderer.getRenderOutput().props.children[1];
 
         expect(actual.type).to.equal('img');
         expect(actual.props.id).to.equal('trumpf');
@@ -121,7 +121,7 @@ describe('PlayerNames Component', () => {
         };
 
         shallowRenderer.render(React.createElement(Trumpf, props));
-        let actual = shallowRenderer.getRenderOutput();
+        let actual = shallowRenderer.getRenderOutput().props.children[1];
 
         expect(actual.type).to.equal('img');
         expect(actual.props.id).to.equal('trumpf');

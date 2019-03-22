@@ -2,6 +2,7 @@ import {EventEmitter} from 'events';
 import JassAppDispatcher from '../jassAppDispatcher';
 import JassAppConstants from '../jassAppConstants';
 import * as Card from '../../../shared/deck/card';
+import {GameMode} from '../../../shared/game/gameMode';
 
 export const GameState = {
     WAITING: 'WAITING',
@@ -39,7 +40,7 @@ const emptyPlayersTable = [emptyPlayer(0), emptyPlayer(1), emptyPlayer(2), empty
 
 let player,
     spectatorEventQueue = [],
-    spectatorRenderingIntervall = 500;
+    spectatorRenderingInterval = 500;
 
 const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
     state: {
@@ -58,6 +59,7 @@ const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
         collectStich: true,
         showLastStich: false,
         showPoints: false,
+        isGeschoben: false,
         lastStichCards: [],
         lastStichStartingPlayerIndex: undefined
     },
@@ -75,7 +77,7 @@ const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
         if (payload) {
             this.handlePayload(payload);
         }
-        setTimeout(this.spectatorRendering.bind(this), spectatorRenderingIntervall);
+        setTimeout(this.spectatorRendering.bind(this), spectatorRenderingInterval);
     },
     handleAction(payload) {
         if (payload.source === JassAppDispatcher.Source.SERVER_ACTION && this.state.playerType === PlayerType.SPECTATOR) {
@@ -93,7 +95,7 @@ const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
                 this.emit('change');
                 break;
             case JassAppConstants.ADJUST_SPECTATOR_SPEED:
-                spectatorRenderingIntervall = action.data;
+                spectatorRenderingInterval = action.data;
                 break;
             case JassAppConstants.SESSION_JOINED:
                 let playerSeating = this.state.playerSeating,
@@ -133,6 +135,8 @@ const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
                 break;
             case JassAppConstants.BROADCAST_TRUMPF:
                 this.state.status = GameState.TRUMPF_CHOSEN;
+                if (action.data.mode === GameMode.SCHIEBE)
+                    this.state.isGeschoben = true;
                 this.state.mode = action.data.mode;
                 this.state.color = action.data.trumpfColor;
                 this.emit('change');
@@ -207,6 +211,7 @@ const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
             case JassAppConstants.BROADCAST_GAME_FINISHED:
                 this.state.mode = undefined;
                 this.state.color = undefined;
+                this.state.isGeschoben = false;
                 this.emit('change');
                 break;
             case JassAppConstants.COLLECT_STICH:
