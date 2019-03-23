@@ -26,6 +26,8 @@ export function start(port, app) {
 			app.use(helmet());
 
 			server = https.createServer(options, app);
+
+			startRedirectServer();
 		} catch (e) {
 			Logger.info(e);
 			Logger.info('There has been a problem starting the https server. Starting a normal http server now...');
@@ -55,4 +57,22 @@ export function start(port, app) {
 export function stop() {
 	SessionHandler.resetInstance();
 	server.close();
+}
+
+/**
+ * Starts a server which redirects the users to the https site
+ * https://stackoverflow.com/questions/7450940/automatic-https-connection-redirect-with-node-js-express
+ */
+function startRedirectServer() {
+	Logger.info('Starting redirect server...');
+	// set up plain http server
+	let redirectServer = http.createServer();
+
+	// set up a route to redirect http to https
+	redirectServer.get('*', function (req, res) {
+		res.redirect('https://' + req.headers.host + req.url);
+
+		// Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
+		// res.redirect('https://example.com' + req.url);
+	});
 }
