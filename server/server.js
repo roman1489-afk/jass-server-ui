@@ -42,6 +42,14 @@ export function start(port, app) {
 	server.listen(port, () => {
 		Logger.info(`Server listening on port: ${server.address().port}`);
 	});
+
+	process.on('SIGTERM', () => {
+		console.info('SIGTERM signal received.');
+		console.log('Shutting down Jass Server');
+		SessionHandler.resetInstance();
+		server.close();
+		process.exit(0);
+	});
 }
 
 export function stop() {

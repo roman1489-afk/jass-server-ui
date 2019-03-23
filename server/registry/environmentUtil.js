@@ -16,7 +16,7 @@ const EnvironmentUtil = {
 	},
 
 	getTournamentCounting() {
-		return Boolean(process.env.TOURNAMENT_COUNTING) || false;
+		return Boolean(process.env.TOURNAMENT_COUNTING) || true;
 	},
 
 	getTournamentRounds() {
