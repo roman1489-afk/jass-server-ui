@@ -26,7 +26,7 @@ describe('Counter', () => {
         assert.equal(52, value);
     });
 
-    it('should count simple array with double multiplicated Trumpf', function() {
+    it('should count simple array with double multiplied Trumpf', function() {
         let mode = GameMode.TRUMPF;
         let cardColor = CardColor.SPADES;
 
@@ -41,7 +41,7 @@ describe('Counter', () => {
         assert.equal(96, value);
     });
 
-    it('should count simple array with single multiplicated Trumpf', function() {
+    it('should count simple array with single multiplied Trumpf', function() {
         let mode = GameMode.TRUMPF;
         let cardColor = CardColor.DIAMONDS;
 
