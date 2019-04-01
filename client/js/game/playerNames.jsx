@@ -6,10 +6,10 @@ function addBot(sessionName, seatId, playerBoxId, botStartingMessage) {
 	document.getElementById(playerBoxId).innerText = botStartingMessage;
 	setTimeout(() => {
 		if (document.getElementById(playerBoxId).innerText === botStartingMessage) {
-			botStartingMessage = 'Bot crashed! Restarting bot now...';
+			botStartingMessage = 'Bot crashed! Restarting now...';
 			addBot(sessionName, seatId, playerBoxId, botStartingMessage);
 		}
-	}, 15000);
+	}, 25000);
 }
 
 function isSeatOccupiedOrNotAllowedForBot(players, player) {
