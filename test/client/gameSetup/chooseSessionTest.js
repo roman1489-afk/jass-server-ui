@@ -79,7 +79,7 @@ describe('ChooseSession Component', () => {
         newTournamentInput.props.onKeyPress({target:{value:'testTournament'}, charCode:13});
         sinon.assert.calledWith(createNewSessionSpy, SessionType.TOURNAMENT, 'testTournament', true);
 
-        let autojoinInput = actual.props.children[4].props.children[1];
+        let autojoinInput = actual.props.children[4].props.children[0];
         expect(autojoinInput.props.onClick).to.equal(JassActions.autojoinSession);
     });
 

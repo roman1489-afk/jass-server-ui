@@ -17,6 +17,7 @@ export default (props) => {
         <div id="requestPlayerName" className={(props.setupState === GameSetupState.SET_PLAYER_NAME ? '' : 'hidden')}>
 			<h1 className="jumbotron">Welcome to the Jass Server</h1>
             <input type="text" placeholder="Player Name..." onKeyPress={choosePlayerName}/>
+            <p>Press enter to continue...</p>
         </div>
     );
 };
