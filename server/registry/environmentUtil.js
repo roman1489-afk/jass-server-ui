@@ -24,7 +24,7 @@ const EnvironmentUtil = {
 	},
 
 	getTournamentLoggingDir() {
-		return String(process.env.TOURNAMENT_LOGGING_DIR) || 'experiments';
+		return process.env.TOURNAMENT_LOGGING_DIR || 'experiments';
 	},
 
 	getPort() {
@@ -36,11 +36,11 @@ const EnvironmentUtil = {
 	},
 
 	getPublicServerAddress() {
-		return String(process.env.PUBLIC_SERVER_ADDRESS) || 'ws://localhost:3000';
+		return process.env.PUBLIC_SERVER_ADDRESS || 'ws://localhost:3000';
 	},
 
 	getRegistryAddress() {
-		return String(process.env.REGISTRY_URL) || 'http://localhost:3001/api';
+		return process.env.REGISTRY_URL || 'http://localhost:3001/api';
 	}
 };
 
