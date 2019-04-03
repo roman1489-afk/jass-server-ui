@@ -10,7 +10,7 @@ export function startJassTheRipperBot({url, sessionName, chosenTeamIndex}) {
 	console.log('Starting JassTheRipper Bot...');
 
 	const {exec} = require('child_process');
-	let botProcess = exec(`cd ../JassTheRipper && ./gradlew run -Pmyargs=${url},${chosenTeamIndex} --no-daemon`);
+	let botProcess = exec(`cd ../JassTheRipper && ./gradlew run -Pmyargs=${url},${sessionName},${chosenTeamIndex} --no-daemon`);
 
 	botProcess.stdout.on('data', function (data) {
 		console.log(data);
