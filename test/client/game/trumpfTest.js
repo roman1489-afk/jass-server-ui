@@ -98,7 +98,7 @@ describe('PlayerNames Component', () => {
         expect(actual.type).to.equal('img');
         expect(actual.props.id).to.equal('trumpf');
         expect(actual.props.className).to.equal('');
-        expect(actual.props.src).to.equal('/images/trumpf/undeufe.jpg');
+        expect(actual.props.src).to.equal('/images/trumpf/undeufe.png');
     });
 
     it('should render an img element without className hidden with given mode obeabe and no color', () => {
@@ -112,7 +112,7 @@ describe('PlayerNames Component', () => {
         expect(actual.type).to.equal('img');
         expect(actual.props.id).to.equal('trumpf');
         expect(actual.props.className).to.equal('');
-        expect(actual.props.src).to.equal('/images/trumpf/obeabe.jpg');
+        expect(actual.props.src).to.equal('/images/trumpf/obeabe.png');
     });
 
     it('should render an img element without className hidden with given mode schiebe and no color', () => {
@@ -126,7 +126,7 @@ describe('PlayerNames Component', () => {
         expect(actual.type).to.equal('img');
         expect(actual.props.id).to.equal('trumpf');
         expect(actual.props.className).to.equal('');
-        expect(actual.props.src).to.equal('/images/trumpf/schiebe.jpg');
+        expect(actual.props.src).to.equal('/images/trumpf/schiebe.png');
     });
 
 });

@@ -29,15 +29,15 @@ export default (props) => {
 			}
 			break;
 		case GameMode.OBEABE:
-			imagePath = basePath + 'obeabe.jpg';
+			imagePath = basePath + 'obeabe.png';
 			titleString = 'Top-Down/Obe-Abe';
 			break;
 		case GameMode.UNDEUFE:
-			imagePath = basePath + 'undeufe.jpg';
+			imagePath = basePath + 'undeufe.png';
 			titleString = 'Bottom-Up/Unde-Ufe';
 			break;
 		case GameMode.SCHIEBE:
-			imagePath = basePath + 'schiebe.jpg';
+			imagePath = basePath + 'schiebe.png';
 			titleString = 'Shifted/Geschoben';
 			break;
 	}
@@ -50,7 +50,7 @@ export default (props) => {
 		<div>
 			<img id="shift"
 				 className={props.isGeschoben && isTrumpfChosen() && mode !== GameMode.SCHIEBE ? '' : 'hidden'}
-				 src={basePath + 'schiebe.jpg'} alt={titleString} title={titleString}
+				 src={basePath + 'schiebe.png'} alt={titleString} title={titleString}
 			/>
 			<img id="trumpf" className={isTrumpfChosen() ? '' : 'hidden'}
 				 src={imagePath} alt={titleString} title={titleString}

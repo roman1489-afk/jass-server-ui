@@ -27,14 +27,14 @@ export default (props) => {
                 <input type="text" name="createNewSession" placeholder="Single Game Name..."
                        onKeyPress={(event) => createNewSession(SessionType.SINGLE_GAME, false, event)}
                 />
-				<p>Press enter to continue...</p>
+				<p>Press Enter to continue...</p>
             </div>
             <div className="session-choice">
 				<h2>Start a fresh tournament</h2>
                 <input type="text" name="createNewTournament" placeholder="Tournament Name..."
                        onKeyPress={(event) => createNewSession(SessionType.TOURNAMENT, true, event)}
                 />
-				<p>Press enter to continue...</p>
+				<p>Press Enter to continue...</p>
             </div>
             <div className="session-choice">
                 <button type="button" name="autoJoin" onClick={JassActions.autojoinSession}>Just Join!</button>

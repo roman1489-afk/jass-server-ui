@@ -27,15 +27,15 @@ export default (props) => {
 			<img onClick={() => chooseTrumpf(GameMode.TRUMPF, CardColor.SPADES)} src={cardTypeImagePath + 'spades.png'}
 				 alt={'Spades/Schilte'} title={'Spades/Schilte'}
 			/>
-			<img onClick={() => chooseTrumpf(GameMode.UNDEUFE)} src={imagePath + 'undeufe.jpg'}
+			<img onClick={() => chooseTrumpf(GameMode.UNDEUFE)} src={imagePath + 'undeufe.png'}
 				 alt={'Bottom-Up/Unde-Ufe'} title={'Bottom-Up/Unde-Ufe'}
 			/>
-			<img onClick={() => chooseTrumpf(GameMode.OBEABE)} src={imagePath + 'obeabe.jpg'}
+			<img onClick={() => chooseTrumpf(GameMode.OBEABE)} src={imagePath + 'obeabe.png'}
 				 alt={'Top-Down/Obe-Abe'} title={'Top-Down/Obe-Abe'}
 			/>
 			{(() => {
 				if (!props.isGeschoben) {
-					return <img onClick={() => chooseTrumpf(GameMode.SCHIEBE)} src={imagePath + 'schiebe.jpg'}
+					return <img onClick={() => chooseTrumpf(GameMode.SCHIEBE)} src={imagePath + 'schiebe.png'}
 								alt={'Shift/Schiebe'} title={'Shift/Schiebe'}
 					/>;
 				}
