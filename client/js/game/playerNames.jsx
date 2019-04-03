@@ -4,12 +4,12 @@ import JassActions from '../jassActions';
 function addBot(sessionName, seatId, playerBoxId, botStartingMessage) {
 	JassActions.joinBot(sessionName, Number(seatId) % 2);
 	document.getElementById(playerBoxId).innerText = botStartingMessage;
-	setTimeout(() => {
-		if (document.getElementById(playerBoxId).innerText === botStartingMessage) {
-			botStartingMessage = 'Bot crashed! Restarting now...';
-			addBot(sessionName, seatId, playerBoxId, botStartingMessage);
-		}
-	}, 25000);
+	//setTimeout(() => {
+	//	if (document.getElementById(playerBoxId).innerText === botStartingMessage) {
+	//		botStartingMessage = 'Bot crashed! Restarting now...';
+	//		addBot(sessionName, seatId, playerBoxId, botStartingMessage);
+	//	}
+	//}, 25000);
 }
 
 function isSeatOccupiedOrNotAllowedForBot(players, player) {
