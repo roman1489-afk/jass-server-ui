@@ -84,6 +84,22 @@ const SessionHandler = {
         });
     },
 
+	/**
+     * Gets all the sessions and picks only the name and started boolean to return because of security considerations
+	 * (we do not want to send the entire session to the client).
+	 * @returns {any[]}
+	 */
+	getAllSessionNamesWithStartedBoolean() {
+        // https://www.jstips.co/en/javascript/picking-and-rejecting-object-properties/
+		function pick(obj, keys) {
+			return keys.map(k => k in obj ? {[k]: obj[k]} : {}).reduce((res, o) => Object.assign(res, o), {});
+		}
+
+        return this.sessions.map((session) => {
+            return pick(session, ['name', 'started']);
+        });
+    },
+
     handleClientConnection(ws) {
         keepSessionAlive(ws, 10000);
 
@@ -100,7 +116,7 @@ const SessionHandler = {
         }));
 
         return clientApi.requestPlayerName(ws).then((playerName) => {
-            return clientApi.requestSessionChoice(ws, this.getAvailableSessionNames()).then((sessionChoiceResponse) => {
+            return clientApi.requestSessionChoice(ws, this.getAllSessionNamesWithStartedBoolean()).then((sessionChoiceResponse) => {
                 const session = createAndReturnSession(this.sessions, sessionChoiceResponse);
 
                 if (sessionChoiceResponse.sessionChoice === SessionChoice.SPECTATOR || sessionChoiceResponse.asSpectator) {

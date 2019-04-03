@@ -63,32 +63,44 @@
           border-top: 1px solid @grey;
         }
 
-        div:first-child {
-          -webkit-flex-grow: 2;
-          flex-grow: 2;
-          padding: 20px;
-          background-color: @white;
-          color: @grey;
+        div {
+          text-align: center;
           font-size: 24pt;
           @media @phone {
             font-size: 16px;
           }
+        }
+
+        div:first-child {
+		  text-align: left;
+          cursor: default;
+		  padding: 20px;
+		  width: 60%;
+
+		  background-color: @white;
+		  color: @grey;
+        }
+
+		div:nth-child(2) {
+          cursor: pointer;
+		  padding: 20px 10px;
+
+		  background-color: @orange;
+          color: @white;
 
           &:hover {
-            background-color: @light-grey;
-            color: @white;
+            background-color: @dark-orange;
           }
         }
 
         div:last-child {
-          background-color: @violet;
-          padding: 20px;
-          width: 50%;
-          font-size: 24pt;
-          text-align: center;
-          @media @phone {
-            font-size: 16px;
-          }
+          cursor: pointer;
+		  padding: 20px 10px;
+		  -webkit-flex-grow: 2;
+		  flex-grow: 2;
+
+		  background-color: @violet;
+          color: @white;
 
           &:hover {
             background-color: @dark-violet;

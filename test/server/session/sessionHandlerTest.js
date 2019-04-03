@@ -100,10 +100,11 @@ describe('sessionHandler', () => {
             }));
 
             session.name = sessionName;
+            session.started = false;
             singleGameSessionMock.expects('create').withArgs(sessionName).once().returns(session);
             sessionMock.expects('addPlayer').twice();
 
-            clientApiMock.expects('requestSessionChoice').once().withArgs(webSocket, [sessionName]).returns(Promise.resolve({
+            clientApiMock.expects('requestSessionChoice').once().withArgs(webSocket, [{name: session.name, started: session.started}]).returns(Promise.resolve({
                 sessionChoice: SessionChoice.JOIN_EXISTING,
                 sessionName: sessionName
             }));
@@ -126,10 +127,11 @@ describe('sessionHandler', () => {
             }));
 
             session.name = sessionName;
+            session.started = false;
             singleGameSessionMock.expects('create').withArgs(sessionName).once().returns(session);
             sessionMock.expects('addPlayer').twice();
 
-            clientApiMock.expects('requestSessionChoice').once().withArgs(webSocket, [sessionName]).returns(Promise.resolve({}));
+            clientApiMock.expects('requestSessionChoice').once().withArgs(webSocket, [{name: session.name, started: session.started}]).returns(Promise.resolve({}));
 
             sessionHandler.handleClientConnection(webSocket).then(() => {
                 return sessionHandler.handleClientConnection(webSocket).then(() => {

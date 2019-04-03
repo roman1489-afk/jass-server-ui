@@ -16,9 +16,10 @@ export default (props) => {
             <ul>
                 {sessions.map((session) => {
                     return (
-                        <li key={session}>
-                            <div onClick={() => JassActions.joinExistingSession(session)}>{session}</div>
-                            <div onClick={() => JassActions.joinExistingSessionAsSpectator(session)}>as spectator</div>
+                        <li key={session.name}>
+                            <div>{session.name}</div>
+                            <div onClick={() => JassActions.joinExistingSession(session.name)} className={session.started ? 'hidden' : ''}>play</div>
+                            <div onClick={() => JassActions.joinExistingSessionAsSpectator(session.name)}>watch</div>
                         </li>);
                 })}
             </ul>

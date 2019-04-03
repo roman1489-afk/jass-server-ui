@@ -44,21 +44,23 @@ describe('ExistingSessions Component', () => {
     });
 
     it('should append sessions and add event listeners to them', () => {
-        shallowRenderer.render(React.createElement(ExistingSessions, { sessions: ['sessionName', 'sessionName2']}));
+        shallowRenderer.render(React.createElement(ExistingSessions, { sessions: [{name: 'sessionName', started: false}, {name: 'sessionName2', started: false}]}));
         let actual = shallowRenderer.getRenderOutput();
 
         let list = actual.props.children[1];
         expect(list.props.children.length).to.equal(2);
         let secondSession = list.props.children[1];
         expect(secondSession.type).to.equal('li');
-        let playerJoin = secondSession.props.children[0];
-        let spectatorJoin = secondSession.props.children[1];
-        expect(playerJoin.props.children).to.equal('sessionName2');
+
+		expect(secondSession.props.children[0].props.children).to.equal('sessionName2');
+		let playerJoin = secondSession.props.children[1];
+        let spectatorJoin = secondSession.props.children[2];
+        expect(playerJoin.props.children).to.equal('play');
 
         playerJoin.props.onClick();
         const spyWithArgs = joinExistingSessionSpy.withArgs('sessionName2');
         sinon.assert.calledOnce(spyWithArgs);
-        expect(spectatorJoin.props.children).to.equal('as spectator');
+        expect(spectatorJoin.props.children).to.equal('watch');
 
         spectatorJoin.props.onClick();
         sinon.assert.calledOnce(joinExistingSessionAsSepctatorSpy);
