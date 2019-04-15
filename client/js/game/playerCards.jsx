@@ -18,8 +18,6 @@ function cancelClick(color, number, event) {
     event.preventDefault();
 }
 
-
-
 export default (props) => {
 
     const cards = props.cards || [],

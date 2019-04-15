@@ -56,10 +56,10 @@ function createAndReturnSession(sessions, sessionChoiceResponse) {
     }
 }
 
-function keepSessionAlive(webSocket, intervall) {
+function keepSessionAlive(webSocket, interval) {
     if (webSocket.readyState === 1) {
         webSocket.ping();
-        setTimeout(keepSessionAlive.bind(null, webSocket, intervall), intervall);
+        setTimeout(keepSessionAlive.bind(null, webSocket, interval), interval);
     }
 }
 

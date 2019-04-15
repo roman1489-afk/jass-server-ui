@@ -43,8 +43,7 @@ function getFirstAvailableTeamIndex(session) {
 	}
 }
 
-function assignTeamIndex(session, chosenTeamIndex = getFirstAvailableTeamIndex(session)) {
-	let teamIndex = chosenTeamIndex;
+function assignTeamIndex(session, teamIndex = getFirstAvailableTeamIndex(session)) {
 	let playersInTeam = getPlayersInTeam(session, session.teams[teamIndex]).length;
 	if (playersInTeam === 2) {
 		// can not assign to this team, use other team.
@@ -57,7 +56,6 @@ function assignTeamIndex(session, chosenTeamIndex = getFirstAvailableTeamIndex(s
  * @param chosenTeamIndex index of the team the player would like to join (optional, otherwise the next free place is assigned)
  */
 function createPlayer(session, webSocket, playerName, chosenTeamIndex) {
-
 	// Calculate team and player index (depending on chosen team or assign one)
 	const teamIndex = assignTeamIndex(session, chosenTeamIndex);
 	const playersInTeam = getPlayersInTeam(session, session.teams[teamIndex]).length;
@@ -134,6 +132,15 @@ const Session = {
 	started: false,
 	finished: false,
 
+	listenToJoiningBots(webSocket) {
+		this.joinBotListeners.push(this.clientApi.subscribeMessage(webSocket, MessageType.JOIN_BOT, (message) => {
+			let protocol = EnvironmentUtil.getPort() === 443 ? 'wss' : 'ws';
+			message.data.url = `${protocol}://localhost:${EnvironmentUtil.getPort()}`;
+			startJassTheRipperBot(message.data);
+			//startRandomBot(message.data);
+		}));
+	},
+
 	/**
 	 * @param chosenTeamIndex index of the team the player would like to join (optional, otherwise the next free place is assigned)
 	 */
@@ -142,12 +149,8 @@ const Session = {
 		insertPlayer(this, player);
 		registerClientAndBroadcastSessionJoined(this, webSocket, player);
 
-		this.joinBotListeners.push(this.clientApi.subscribeMessage(webSocket, MessageType.JOIN_BOT, (message) => {
-			let protocol = EnvironmentUtil.getPort() === 443 ? 'wss' : 'ws';
-			message.data.url = `${protocol}://localhost:${EnvironmentUtil.getPort()}`;
-			startJassTheRipperBot(message.data);
-			//startRandomBot(message.data);
-		}));
+		// Why does there have to be a joinBotListener for every player added?
+		this.listenToJoiningBots(webSocket);
 	},
 
 	addSpectator(webSocket) {
