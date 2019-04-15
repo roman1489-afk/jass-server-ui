@@ -96,7 +96,7 @@ const SessionHandler = {
 		}
 
         return this.sessions.map((session) => {
-            return pick(session, ['name', 'started']);
+            return pick(session, ['name', 'started', 'type']);
         });
     },
 
