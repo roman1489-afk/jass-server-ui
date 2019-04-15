@@ -4,6 +4,8 @@ import _ from 'lodash';
 import WebSocket from 'ws';
 import { Logger } from '../logger';
 import CloseEventCode from './closeEventCode';
+import EnvironmentUtil from '../registry/environmentUtil';
+import {startJassTheRipperBot} from '../bot/botStarter';
 
 const ClientApi = {
     addClient(client) {
@@ -122,6 +124,15 @@ const ClientApi = {
 
     subscribeMessage(client, messageType, messageHandler) {
         return this.clientCommunication.on(client, messageType, messageHandler);
+    },
+
+    subscribeToJoiningBotsMessage(webSocket) {
+        return this.subscribeMessage(webSocket, MessageType.JOIN_BOT, (message) => {
+            let protocol = EnvironmentUtil.getPort() === 443 ? 'wss' : 'ws';
+            message.data.url = `${protocol}://localhost:${EnvironmentUtil.getPort()}`;
+            startJassTheRipperBot(message.data);
+            //startRandomBot(message.data);
+        });
     },
 
     setCommunicationProxy(proxyHandler) {

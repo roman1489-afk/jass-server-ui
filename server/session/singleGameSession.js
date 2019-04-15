@@ -132,15 +132,6 @@ const Session = {
 	started: false,
 	finished: false,
 
-	listenToJoiningBots(webSocket) {
-		this.joinBotListeners.push(this.clientApi.subscribeMessage(webSocket, MessageType.JOIN_BOT, (message) => {
-			let protocol = EnvironmentUtil.getPort() === 443 ? 'wss' : 'ws';
-			message.data.url = `${protocol}://localhost:${EnvironmentUtil.getPort()}`;
-			startJassTheRipperBot(message.data);
-			//startRandomBot(message.data);
-		}));
-	},
-
 	/**
 	 * @param chosenTeamIndex index of the team the player would like to join (optional, otherwise the next free place is assigned)
 	 */
@@ -150,7 +141,7 @@ const Session = {
 		registerClientAndBroadcastSessionJoined(this, webSocket, player);
 
 		// Why does there have to be a joinBotListener for every player added?
-		this.listenToJoiningBots(webSocket);
+		this.joinBotListeners.push(this.clientApi.subscribeToJoiningBotsMessage(webSocket));
 	},
 
 	addSpectator(webSocket) {

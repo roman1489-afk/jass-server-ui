@@ -10,6 +10,8 @@ describe('tournamentSession', () => {
         singleGameSessionFactoryMock,
         createWebSocketDummy = () => ({
             send() {
+            },
+            on() {
             }
         }),
         webSocketDummy = createWebSocketDummy(),

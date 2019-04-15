@@ -120,6 +120,7 @@ const TournamentSession = {
         this.clientApi.addClient(webSocket);
         this.clientApi.sendTournamentRankingTable(webSocket, this.rankingTable);
         this.spectators.push(webSocket);
+		this.clientApi.subscribeToJoiningBotsMessage(webSocket);
     },
 
     isComplete() {

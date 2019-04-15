@@ -6,6 +6,12 @@ import PairingsTable from './pairingsTable.jsx';
 import TournamentStore from './tournamentStore';
 
 
+function addBotTeam(sessionName) {
+	JassActions.joinBot(sessionName, 0);
+	JassActions.joinBot(sessionName, 0);
+	document.getElementById('addJassTheRipperTeam').className = 'hidden';
+}
+
 export default React.createClass({
 
     handleGameSetupState() {
@@ -31,9 +37,10 @@ export default React.createClass({
                     sessionName={state.sessionName}
                     isSpectator={state.isSpectator}
                 />
-                
-                <h1 className="jumbotron">Current rankings</h1>
 
+				<button id={'addJassTheRipperTeam'} onClick={() => addBotTeam(state.sessionName)}>Add JassTheRipper Team</button>
+
+                <h1 className="jumbotron">Current rankings</h1>
                 {(() => {
                     if (state.tournamentStarted && state.rankingDisplayed) {
                         return <RankingTable ranking={state.ranking}/>;

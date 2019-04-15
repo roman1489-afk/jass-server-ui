@@ -32,8 +32,8 @@ describe('Tournament table Component', () => {
         const actual = shallowRenderer.getRenderOutput();
 
         expect(actual.props.children[1].props.bots).to.equal(TournamentStore.state.registryBots);
-        expect(actual.props.children[3].props.ranking).to.equal(TournamentStore.state.ranking);
-        expect(actual.props.children[5].props.pairings).to.equal(TournamentStore.state.pairingResults);
+        expect(actual.props.children[4].props.ranking).to.equal(TournamentStore.state.ranking);
+        expect(actual.props.children[6].props.pairings).to.equal(TournamentStore.state.pairingResults);
     });
 
     it('should render start button with click handler when not started', () => {
@@ -42,7 +42,7 @@ describe('Tournament table Component', () => {
         shallowRenderer.render(React.createElement(TournamentTable));
         let actual = shallowRenderer.getRenderOutput();
 
-        let button = actual.props.children[6];
+        let button = actual.props.children[7];
         expect(button.type).to.equal('button');
         expect(button.props.onClick).to.equal(JassActions.startTournament);
     });
@@ -53,6 +53,6 @@ describe('Tournament table Component', () => {
         shallowRenderer.render(React.createElement(TournamentTable));
         let actual = shallowRenderer.getRenderOutput();
 
-        expect(actual.props.children[6]).to.equal(undefined);
+        expect(actual.props.children[7]).to.equal(undefined);
     });
 });
