@@ -29,12 +29,13 @@ const Player = {
     }
 };
 
-export function create(team, name, id, seatId, clientApi) {
+export function create(team, name, id, seatId, isHuman, clientApi) {
     let player = Object.create(Player);
     player.id = id;
     player.seatId = seatId;
     player.name = name;
     player.team = team;
+    player.isHuman = isHuman;
     player.clientApi = clientApi;
     return player;
 }

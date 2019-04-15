@@ -125,8 +125,10 @@ const SessionHandler = {
                     if (session.type === SessionType.TOURNAMENT) {
                         clientApi.waitForTournamentStart(ws).then(handleTournamentStart.bind(null, this, ws, session));
                     }
-                } else {
-                    session.addPlayer(ws, playerName, sessionChoiceResponse.chosenTeamIndex);
+                } else if(sessionChoiceResponse.sessionChoice === SessionChoice.ADVISOR || sessionChoiceResponse.advisedPlayer) {
+                	session.addAdvisor(ws, sessionChoiceResponse.advisedPlayer)
+				} else {
+                    session.addPlayer(ws, playerName, sessionChoiceResponse.chosenTeamIndex, sessionChoiceResponse.isHuman);
                     if (session.type === SessionType.SINGLE_GAME && session.isComplete()) {
                         this.startSession(session);
                     }

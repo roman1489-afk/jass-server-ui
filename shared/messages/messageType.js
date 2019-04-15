@@ -118,14 +118,20 @@ export const MessageType = {
                     within: SessionType
                 }
             },
+			'data.asSpectator': {
+				presence: false
+			},
+			'data.advisedPlayer': {
+				presence: false
+			},
             'data.chosenTeamIndex': {
                 inclusion: {
                     within: [0, 1]
                 }
             },
-            'data.asSpectator': {
-                presence: false
-            }
+			'data.isHuman': {
+				presence: false,
+			},
         }
     },
     SESSION_JOINED: {

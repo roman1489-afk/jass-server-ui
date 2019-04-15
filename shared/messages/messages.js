@@ -113,7 +113,7 @@ function createRequestSessionChoice(availableSessions) {
     };
 }
 
-function createChooseSession(sessionChoice, {sessionName, sessionType, asSpectator, chosenTeamIndex} = {}) {
+function createChooseSession(sessionChoice, {sessionName, sessionType, asSpectator, advisedPlayer, chosenTeamIndex, isHuman} = {}) {
     return {
         type: MessageType.CHOOSE_SESSION.name,
         data: {
@@ -121,7 +121,9 @@ function createChooseSession(sessionChoice, {sessionName, sessionType, asSpectat
             sessionName,
             sessionType,
             asSpectator,
-            chosenTeamIndex
+			advisedPlayer,
+            chosenTeamIndex,
+            isHuman
         }
     };
 }

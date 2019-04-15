@@ -1,16 +1,17 @@
 import {create as createJassBot} from '../../bot/JassBot';
 import nameGenerator from 'docker-namesgenerator';
+import EnvironmentUtil from '../registry/environmentUtil';
 
-export function startRandomBot({url, sessionName, chosenTeamIndex}) {
+export function startRandomBot({sessionName, chosenTeamIndex}) {
 	console.log('Starting Random Bot...');
-	createJassBot(nameGenerator(), url, sessionName, chosenTeamIndex);
+	createJassBot(nameGenerator(), composeUrl(), sessionName, chosenTeamIndex);
 }
 
-export function startJassTheRipperBot({url, sessionName, chosenTeamIndex}) {
+export function startJassTheRipperBot({sessionName, chosenTeamIndex, advisedPlayer = null}) {
 	console.log('Starting JassTheRipper Bot...');
 
 	const {exec} = require('child_process');
-	let botProcess = exec(`cd ../JassTheRipper && ./gradlew run -Pmyargs=${url},${sessionName},${chosenTeamIndex} --no-daemon`);
+	let botProcess = exec(`cd ../JassTheRipper && ./gradlew run -Pmyargs=${composeUrl()},${sessionName},${chosenTeamIndex},${advisedPlayer} --no-daemon`);
 
 	botProcess.stdout.on('data', function (data) {
 		console.log(data);
@@ -23,4 +24,9 @@ export function startJassTheRipperBot({url, sessionName, chosenTeamIndex}) {
 	botProcess.on('exit', function () {
 		console.log('JassTheRipper left the game.');
 	});
+}
+
+function composeUrl() {
+	let protocol = EnvironmentUtil.getPort() === 443 ? 'wss' : 'ws';
+	return `${protocol}://localhost:${EnvironmentUtil.getPort()}`;
 }
