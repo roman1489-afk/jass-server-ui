@@ -7,8 +7,8 @@ import TournamentStore from './tournamentStore';
 
 
 function addBotTeam(sessionName) {
-	JassActions.joinBot(sessionName, 0);
-	JassActions.joinBot(sessionName, 0);
+	JassActions.joinBot(sessionName, 1);
+	JassActions.joinBot(sessionName, 1);
 	document.getElementById('addJassTheRipperTeam').className = 'hidden';
 }
 

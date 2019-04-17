@@ -431,7 +431,7 @@ describe('Session', function () {
             };
 
             clientApiMock.expects('addClient').once().withArgs(webSocketDummy);
-            clientApiMock.expects('sessionJoined').once().withArgs(webSocketDummy, session.name, session.lastSessionJoin.player, session.lastSessionJoin.playersInSession);
+            clientApiMock.expects('sessionJoined').once().withArgs(webSocketDummy, session.name, { name: 'Spectator' }, session.lastSessionJoin.playersInSession);
 
             session.addSpectator(webSocketDummy);
 

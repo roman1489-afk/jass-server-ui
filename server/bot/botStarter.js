@@ -7,11 +7,15 @@ export function startRandomBot({sessionName, chosenTeamIndex}) {
 	createJassBot(nameGenerator(), composeUrl(), sessionName, chosenTeamIndex);
 }
 
-export function startJassTheRipperBot({sessionName, chosenTeamIndex, advisedPlayer = null}) {
+export function startJassTheRipperBot({sessionName, chosenTeamIndex, advisedPlayerName: advisedPlayerName = null}) {
+	let botName = 'JassTheRipper';
+	if (advisedPlayerName)
+		botName = advisedPlayerName + '-Advisor';
+
 	console.log('Starting JassTheRipper Bot...');
 
 	const {exec} = require('child_process');
-	let botProcess = exec(`cd ../JassTheRipper && ./gradlew run -Pmyargs=${composeUrl()},${sessionName},${chosenTeamIndex},${advisedPlayer} --no-daemon`);
+	let botProcess = exec(`cd ../JassTheRipper && ./gradlew run -Pmyargs=${composeUrl()},${sessionName},${chosenTeamIndex},${advisedPlayerName},${botName} --no-daemon`);
 
 	botProcess.stdout.on('data', function (data) {
 		console.log(data);

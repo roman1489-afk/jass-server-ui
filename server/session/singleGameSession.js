@@ -1,6 +1,7 @@
 import * as ClientApi from '../communication/clientApi';
 import * as Game from '../game/game';
 import * as Player from '../game/player/player';
+import * as Advisor from '../game/player/advisor';
 import * as Team from '../game/player/team';
 import {SessionType} from '../../shared/session/sessionType';
 import SessionHandler from './sessionHandler';
@@ -34,7 +35,7 @@ function getPlayersInTeam(session, team) {
 }
 
 function getPlayerByName(session, playerName) {
-	return session.players.filter(player => player.name === playerName);
+	return session.players.filter(player => player.name === playerName)[0];
 }
 
 function getFirstAvailableTeamIndex(session) {
@@ -55,6 +56,18 @@ function assignTeamIndex(session, teamIndex = getFirstAvailableTeamIndex(session
 	return teamIndex;
 }
 
+function bindClientApi(session, webSocket) {
+	return {
+		dealCards: session.clientApi.dealCards.bind(session.clientApi, webSocket),
+		requestTrumpf: session.clientApi.requestTrumpf.bind(session.clientApi, webSocket),
+		rejectTrumpf: session.clientApi.rejectTrumpf.bind(session.clientApi, webSocket),
+		suggestTrumpf: session.clientApi.suggestTrumpf.bind(session.clientApi, webSocket),
+		requestCard: session.clientApi.requestCard.bind(session.clientApi, webSocket),
+		rejectCard: session.clientApi.rejectCard.bind(session.clientApi, webSocket),
+		suggestCard: session.clientApi.suggestCard.bind(session.clientApi, webSocket),
+	};
+}
+
 /**
  * @param chosenTeamIndex index of the team the player would like to join (optional, otherwise the next free place is assigned)
  */
@@ -63,28 +76,18 @@ function createPlayer(session, webSocket, playerName, chosenTeamIndex, isHuman) 
 	const teamIndex = assignTeamIndex(session, chosenTeamIndex);
 	const playersInTeam = getPlayersInTeam(session, session.teams[teamIndex]).length;
 	const seatId = (playersInTeam * 2) + teamIndex;
-	const playerId = generateUuid();
+	const playerId = uuidv4();
 	webSocket.jassChallengeId = `${playerName}#${seatId}`;
 
-	return Player.create(session.teams[teamIndex], playerName, playerId, seatId, isHuman, {
-		dealCards: session.clientApi.dealCards.bind(session.clientApi, webSocket),
-		requestTrumpf: session.clientApi.requestTrumpf.bind(session.clientApi, webSocket),
-		requestCard: session.clientApi.requestCard.bind(session.clientApi, webSocket),
-		rejectCard: session.clientApi.rejectCard.bind(session.clientApi, webSocket),
-		rejectTrumpf: session.clientApi.rejectTrumpf.bind(session.clientApi, webSocket)
-	});
+	return Player.create(session.teams[teamIndex], playerName, playerId, seatId, isHuman, bindClientApi(session, webSocket));
 }
 
 // from http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-function generateUuid() {
-	function s4() {
-		return Math.floor((1 + Math.random()) * 0x10000)
-			.toString(16)
-			.substring(1);
-	}
-
-	return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-		s4() + '-' + s4() + s4() + s4();
+function uuidv4() {
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+		return v.toString(16);
+	});
 }
 
 function insertPlayer(session, player) {
@@ -139,13 +142,12 @@ const Session = {
 	 * @param chosenTeamIndex index of the team the player would like to join (optional, otherwise the next free place is assigned)
 	 */
 	addPlayer(webSocket, playerName, chosenTeamIndex, isHuman) {
-		//startJassTheRipperBot();
 		const player = createPlayer(this, webSocket, playerName, chosenTeamIndex, isHuman);
 		insertPlayer(this, player);
 		registerClientAndBroadcastSessionJoined(this, webSocket, player);
 
 		if (isHuman)
-			startJassTheRipperBot({sessionName: this.name, chosenTeamIndex: 1, advisedPlayer: playerName});
+			startJassTheRipperBot({sessionName: this.name, chosenTeamIndex: chosenTeamIndex, advisedPlayerName: playerName});
 
 		// Why does there have to be a joinBotListener for every player added?
 		this.joinBotListeners.push(this.clientApi.subscribeToJoiningBotsMessage(webSocket));
@@ -153,13 +155,14 @@ const Session = {
 
 	addSpectator(webSocket) {
 		this.clientApi.addClient(webSocket);
-		this.clientApi.sessionJoined(webSocket, this.name, this.lastSessionJoin.player, this.lastSessionJoin.playersInSession);
+		this.clientApi.sessionJoined(webSocket, this.name, {name: 'Spectator'}, this.lastSessionJoin.playersInSession);
 	},
 
 	addAdvisor(webSocket, advisedPlayerName) {
 		let advisedPlayer = getPlayerByName(this, advisedPlayerName);
+		advisedPlayer.advisor = Advisor.create(advisedPlayerName + '-Advisor', bindClientApi(this, webSocket));
 		this.clientApi.addClient(webSocket);
-		this.clientApi.sessionJoined(webSocket, this.name, this.lastSessionJoin.player, this.lastSessionJoin.playersInSession);
+		this.clientApi.sessionJoined(webSocket, this.name, {name: advisedPlayer.advisor.name}, this.lastSessionJoin.playersInSession);
 	},
 
 	isComplete() {
