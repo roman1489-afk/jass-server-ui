@@ -11,6 +11,8 @@ function chooseTrumpf(mode, color) {
 export default (props) => {
 
 	function isSuggestedTrumpf(mode, color) {
+		if (!props.suggestionEnabled)
+			return false;
 		let suggestedTrumpf = props.suggestedTrumpf;
 		if (!suggestedTrumpf)
 			return false;

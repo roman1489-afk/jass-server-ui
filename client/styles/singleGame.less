@@ -59,6 +59,36 @@
   background: url("../images/table.jpg") no-repeat center center fixed;
   background-size: cover;
 
+  #suggestionEngineToggler {
+	img {
+	  position: absolute;
+	  top: 20px;
+	  right: 20px;
+	  width: 50px;
+	  min-height: 50px;
+	  border-radius: 10px;
+
+	  @media @phone {
+		top: 5px;
+		right: 5px;
+		width: 20px;
+		height: 20px;
+		border-radius: 5px;
+
+	  }
+
+	  cursor: pointer;
+
+	  &.disabled {
+		opacity: 0.25;
+	  }
+
+	  &:hover{
+		box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.5);
+	  }
+	}
+  }
+
   #cardTypeSwitcher {
 	position: absolute;
 	top: 0;
@@ -316,7 +346,7 @@
   #playerCards {
 	position: fixed;
 	bottom: 0;
-	left: 0;
+	left: -7%;
 	right: 0;
 	height: 150px;
 	z-index: 2;
@@ -332,7 +362,7 @@
 	  min-width: 100px;
 	  height: auto;
 	  @media @phone {
-		min-width: 36px;
+		min-width: 30px;
 	  }
 
 	  transition: transform .2s cubic-bezier(0.49, 0.82, 0.85, 1.26);
@@ -343,14 +373,28 @@
 		pointer-events: none;
 	  }
 
+	  .card {
+		@media @phone {
+		  width: 50px;
+		}
+	  }
+
 	  .recommended {
 		z-index: -1;
 		position: absolute;
+		border-radius: 50%;
+
 		top: -45px;
 		left: 30px;
 		width: 100px;
 		height: 60px;
-		border-radius: 50%;
+
+		@media @phone {
+		  top: -10px;
+		  left: 10px;
+		  width: 20px;
+		  height: 15px;
+		}
 	  }
 
 	}
@@ -412,6 +456,7 @@
 	padding: 20px;
 	@media @phone {
 	  width: 100%;
+	  top: 50px;
 	}
 
 	border-radius: 10px;
@@ -439,8 +484,8 @@
 	  .recommended {
 		z-index: -1;
 		position: absolute;
-		top: -20px;
-		right: -20px;
+		top: -25px;
+		left: -5px;
 		width: 40px;
 		height: 40px;
 	  }

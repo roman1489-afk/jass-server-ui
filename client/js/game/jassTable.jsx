@@ -1,5 +1,6 @@
 import React from 'react';
-import { default as GameStore, GameState, PlayerType } from './gameStore';
+import {default as GameStore, GameState, PlayerType} from './gameStore';
+import SuggestionEngineToggler from './suggestionEngineToggler.jsx';
 import CardTypeSwitcher from './cardTypeSwitcher.jsx';
 import PlayerCards from './playerCards.jsx';
 import RequestTrumpf from './requestTrumpf.jsx';
@@ -10,77 +11,83 @@ import WinnerNotification from './winnerNotification.jsx';
 
 export default React.createClass({
 
-    handleGameSetupState() {
-        this.setState(GameStore.state);
-    },
+	handleGameSetupState() {
+		this.setState(GameStore.state);
+	},
 
-    componentDidMount() {
-        GameStore.addChangeListener(this.handleGameSetupState);
-    },
+	componentDidMount() {
+		GameStore.addChangeListener(this.handleGameSetupState);
+	},
 
-    componentWillUnmount() {
-        GameStore.removeChangeListener(this.handleGameSetupState);
-    },
+	componentWillUnmount() {
+		GameStore.removeChangeListener(this.handleGameSetupState);
+	},
 
-    render() {
-        let state = this.state || GameStore.state,
-            players = state.players || [],
-            playerSeating = state.playerSeating,
-            playerCards = state.playerCards,
-            tableCards = state.tableCards || [],
-            teams = state.teams || [];
+	render() {
+		let state = this.state || GameStore.state,
+			players = state.players || [],
+			playerSeating = state.playerSeating,
+			playerCards = state.playerCards,
+			tableCards = state.tableCards || [],
+			teams = state.teams || [];
 
-        return (
-            <div id="jassTable">
-                <CardTypeSwitcher cardType={state.cardType} />
-                <JassCarpet
-                    cardType={state.cardType}
-                    players={players}
-                    playerSeating={playerSeating}
-                    cards={tableCards}
-                    startingPlayerIndex={state.startingPlayerIndex}
-                    nextStartingPlayerIndex={state.nextStartingPlayerIndex}
-                    mode={state.mode}
-                    color={state.color}
-                    isGeschoben={state.isGeschoben}
-                    roundPlayerIndex={state.roundPlayerIndex}
-                    collectStich={state.collectStich}
-                    chosenSession={state.chosenSession}
-                    lastStichCards={state.lastStichCards}
-                    lastStichStartingPlayerIndex={state.lastStichStartingPlayerIndex}
-                    showLastStich={state.showLastStich}
-                    status={state.status}
-                />
-                <Points teams={teams} showPoints={state.showPoints} />
-                {(() => {
-                    if (state.playerType === PlayerType.PLAYER) {
-                        return (<PlayerCards
-                            cards={playerCards}
-                            cardType={state.cardType}
-                            suggestedCard={state.suggestedCard}
-                            status={state.status}
-                            tableCards={state.tableCards}
-                            mode={state.mode}
-                            color={state.color}
-                        />);
-                    }
-                })()}
-                {(() => {
-                    if (state.status === GameState.REQUESTING_TRUMPF) {
-                        return <RequestTrumpf isGeschoben={state.isGeschoben} cardType={state.cardType} suggestedTrumpf={state.suggestedTrumpf} />;
-                    }
-                })()}
-                {(() => {
-                    if (state.playerType === PlayerType.SPECTATOR) {
-                        return <SpectatorControls />;
-                    }
-                })()}
-                {(() => {
-                    if (state.status === GameState.FINISHED) {
-                        return <WinnerNotification teams={teams} />;
-                    }
-                })()}
-            </div>
-        );
-    },
+		return (
+			<div id="jassTable">
+				<SuggestionEngineToggler suggestionEnabled={state.suggestionEnabled}/>
+				<CardTypeSwitcher cardType={state.cardType}/>
+				<JassCarpet
+					cardType={state.cardType}
+					players={players}
+					playerSeating={playerSeating}
+					cards={tableCards}
+					startingPlayerIndex={state.startingPlayerIndex}
+					nextStartingPlayerIndex={state.nextStartingPlayerIndex}
+					mode={state.mode}
+					color={state.color}
+					isGeschoben={state.isGeschoben}
+					roundPlayerIndex={state.roundPlayerIndex}
+					collectStich={state.collectStich}
+					chosenSession={state.chosenSession}
+					lastStichCards={state.lastStichCards}
+					lastStichStartingPlayerIndex={state.lastStichStartingPlayerIndex}
+					showLastStich={state.showLastStich}
+					status={state.status}
+				/>
+				<Points teams={teams} showPoints={state.showPoints}/>
+				{(() => {
+					if (state.playerType === PlayerType.PLAYER) {
+						return (<PlayerCards
+							cards={playerCards}
+							cardType={state.cardType}
+							suggestedCard={state.suggestedCard}
+							status={state.status}
+							tableCards={state.tableCards}
+							mode={state.mode}
+							color={state.color}
+							suggestionEnabled={state.suggestionEnabled}
+						/>);
+					}
+				})()}
+				{(() => {
+					if (state.status === GameState.REQUESTING_TRUMPF) {
+						return <RequestTrumpf isGeschoben={state.isGeschoben}
+											  cardType={state.cardType}
+											  suggestedTrumpf={state.suggestedTrumpf}
+											  suggestionEnabled={state.suggestionEnabled}
+						/>;
+					}
+				})()}
+				{(() => {
+					if (state.playerType === PlayerType.SPECTATOR) {
+						return <SpectatorControls/>;
+					}
+				})()}
+				{(() => {
+					if (state.status === GameState.FINISHED) {
+						return <WinnerNotification teams={teams}/>;
+					}
+				})()}
+			</div>
+		);
+	},
 });

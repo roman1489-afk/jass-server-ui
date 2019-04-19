@@ -165,6 +165,13 @@ export default {
 			actionType: JassAppConstants.CHANGE_CARD_TYPE,
 			data: cardType
 		});
+	}
+
+	,toggleSuggestionEngine: (suggestionEnabled) => {
+		JassAppDispatcher.handleViewAction({
+			actionType: JassAppConstants.TOGGLE_SUGGESTION_ENGINE,
+			data: suggestionEnabled
+		});
 	},
 
 	requestCard: (playedCards) => {

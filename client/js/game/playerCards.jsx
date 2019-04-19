@@ -44,6 +44,8 @@ export default (props) => {
 	}
 
 	function isSuggestedCard(card) {
+		if (!props.suggestionEnabled)
+			return false;
 		let suggestedCard = props.suggestedCard;
 		if (!suggestedCard)
 			return false;
@@ -63,7 +65,7 @@ export default (props) => {
 					<div key={card.color + '-' + card.number} className={(isValid(card)) ? '' : 'invalid'}
 						 onClick={(event) => cardClick(card.color, card.number, event)}
 					>
-						<img src={'/images/cards/' + props.cardType + '/' + card.color.toLowerCase() + '_' + card.number + '.gif'}/>
+						<img className={'card'} src={'/images/cards/' + props.cardType + '/' + card.color.toLowerCase() + '_' + card.number + '.gif'}/>
 						{isSuggestedCard(card) ? <img className={'recommended'} src={'/images/recommended.png'}/> : undefined}
 					</div>
 				);

@@ -3,6 +3,7 @@
 import {expect} from 'chai';
 import React from 'react';
 import {default as GameStore, CardType, GameState, PlayerType} from '../../../client/js/game/gameStore';
+import SuggestionEngineToggler from '../../../client/js/game/suggestionEngineToggler.jsx';
 import CardTypeSwitcher from '../../../client/js/game/cardTypeSwitcher.jsx';
 import JassCarpet from '../../../client/js/game/jassCarpet.jsx';
 import Points from '../../../client/js/game/points.jsx';
@@ -46,14 +47,15 @@ describe('JassTable Component', () => {
         let actual = shallowRenderer.getRenderOutput();
 
         let children = actual.props.children;
-        expect(children.length).to.equal(7);
-        expect(children[0].type).to.equal(CardTypeSwitcher);
-        expect(children[1].type).to.equal(JassCarpet);
-        expect(children[2].type).to.equal(Points);
-        expect(children[3].type).to.equal(PlayerCards);
-        expect(children[4]).to.equal(undefined);
+        expect(children.length).to.equal(8);
+        expect(children[0].type).to.equal(SuggestionEngineToggler);
+        expect(children[1].type).to.equal(CardTypeSwitcher);
+        expect(children[2].type).to.equal(JassCarpet);
+        expect(children[3].type).to.equal(Points);
+        expect(children[4].type).to.equal(PlayerCards);
         expect(children[5]).to.equal(undefined);
         expect(children[6]).to.equal(undefined);
+        expect(children[7]).to.equal(undefined);
     });
 
     it('should render children when spectator', () => {
@@ -64,14 +66,15 @@ describe('JassTable Component', () => {
         let actual = shallowRenderer.getRenderOutput();
 
         let children = actual.props.children;
-        expect(children.length).to.equal(7);
-        expect(children[0].type).to.equal(CardTypeSwitcher);
-        expect(children[1].type).to.equal(JassCarpet);
-        expect(children[2].type).to.equal(Points);
-        expect(children[3]).to.equal(undefined);
+        expect(children.length).to.equal(8);
+		expect(children[0].type).to.equal(SuggestionEngineToggler);
+		expect(children[1].type).to.equal(CardTypeSwitcher);
+        expect(children[2].type).to.equal(JassCarpet);
+        expect(children[3].type).to.equal(Points);
         expect(children[4]).to.equal(undefined);
-        expect(children[5].type).to.equal(SpectatorControls);
-        expect(children[6]).to.equal(undefined);
+        expect(children[5]).to.equal(undefined);
+        expect(children[6].type).to.equal(SpectatorControls);
+        expect(children[7]).to.equal(undefined);
     });
 
     it('should pass correct properties to JassCarpet', () => {
@@ -89,7 +92,7 @@ describe('JassTable Component', () => {
         shallowRenderer.render(React.createElement(JassTable));
         let actual = shallowRenderer.getRenderOutput();
 
-        let jassCarpet = actual.props.children[1];
+        let jassCarpet = actual.props.children[2];
         expect(jassCarpet.props.cardType).to.equal(GameStore.state.cardType);
         expect(jassCarpet.props.players).to.eql(GameStore.state.players);
         expect(jassCarpet.props.playerSeating).to.eql(GameStore.state.playerSeating);
@@ -115,7 +118,7 @@ describe('JassTable Component', () => {
         shallowRenderer.render(React.createElement(JassTable));
         let actual = shallowRenderer.getRenderOutput();
 
-        let points = actual.props.children[2];
+        let points = actual.props.children[3];
         expect(points.props.teams).to.equal(GameStore.state.teams);
     });
 
@@ -131,7 +134,7 @@ describe('JassTable Component', () => {
         shallowRenderer.render(React.createElement(JassTable));
         let actual = shallowRenderer.getRenderOutput();
 
-        let playerCards = actual.props.children[3];
+        let playerCards = actual.props.children[4];
         expect(playerCards.props.cards).to.eql(GameStore.state.playerCards);
         expect(playerCards.props.cardType).to.equal(GameStore.state.cardType);
         expect(playerCards.props.status).to.equal(GameStore.state.status);
@@ -148,7 +151,7 @@ describe('JassTable Component', () => {
         shallowRenderer.render(React.createElement(JassTable));
         let actual = shallowRenderer.getRenderOutput();
 
-        let requestTrumpf = actual.props.children[4];
+        let requestTrumpf = actual.props.children[5];
         expect(requestTrumpf.props.isGeschoben).to.equal(GameStore.state.isGeschoben);
         expect(requestTrumpf.props.cardType).to.equal(GameStore.state.cardType);
     });
@@ -159,7 +162,7 @@ describe('JassTable Component', () => {
         shallowRenderer.render(React.createElement(JassTable));
         let actual = shallowRenderer.getRenderOutput();
 
-        let winnerNotification = actual.props.children[6];
+        let winnerNotification = actual.props.children[7];
         expect(winnerNotification.type).to.equal(WinnerNotification);
         expect(winnerNotification.props.teams).to.equal(GameStore.state.teams);
     });

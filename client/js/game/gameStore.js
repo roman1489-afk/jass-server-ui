@@ -46,6 +46,7 @@ const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
 	state: {
 		playerType: PlayerType.PLAYER,
 		cardType: localStorage.getItem('cardType') || CardType.FRENCH,
+		suggestionEnabled: localStorage.getItem('suggestionEnabled') || true,
 		players: [],
 		teams: [],
 		playerSeating: ['bottom', 'right', 'top', 'left'],
@@ -151,6 +152,11 @@ const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
 			case JassAppConstants.CHANGE_CARD_TYPE:
 				this.state.cardType = action.data;
 				localStorage.setItem('cardType', action.data);
+				this.emit('change');
+				break;
+			case JassAppConstants.TOGGLE_SUGGESTION_ENGINE:
+				this.state.suggestionEnabled = action.data;
+				localStorage.setItem('suggestionEnabled', action.data);
 				this.emit('change');
 				break;
 			case JassAppConstants.REQUEST_CARD:
