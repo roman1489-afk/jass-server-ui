@@ -43,6 +43,13 @@ export default (props) => {
 		return isRequestingCard ? validator.validate(tableCards, cards, card) : true;
 	}
 
+	function isSuggestedCard(card) {
+		let suggestedCard = props.suggestedCard;
+		if (!suggestedCard)
+			return false;
+		return suggestedCard.number === card.number && suggestedCard.color === card.color;
+	}
+
 	return (
 		<div id="playerCards" className={(isRequestingCard) ? 'onTurn' : ''}>
 			{cards.sort((a, b) => {
@@ -50,15 +57,17 @@ export default (props) => {
 					return colorIndices[a.color] - colorIndices[b.color];
 				}
 
-                return colorIndices[a.color] - colorIndices[b.color] + a.number - b.number;
-            }).map((card) => {
-                return (
-                    <img key={card.color + '-' + card.number}
-                         src={'/images/cards/' + props.cardType + '/' + card.color.toLowerCase() + '_' + card.number + '.gif'}
-                         onClick={(event) => cardClick(card.color, card.number, event)}
-                         className={(isValid(card)) ? '' : 'invalid'}
-                    />);
-            })}
-        </div>
-    );
+				return colorIndices[a.color] - colorIndices[b.color] + a.number - b.number;
+			}).map((card) => {
+				return (
+					<div key={card.color + '-' + card.number} className={(isValid(card)) ? '' : 'invalid'}
+						 onClick={(event) => cardClick(card.color, card.number, event)}
+					>
+						<img src={'/images/cards/' + props.cardType + '/' + card.color.toLowerCase() + '_' + card.number + '.gif'}/>
+						{isSuggestedCard(card) ? <img className={'recommended'} src={'/images/recommended.png'}/> : undefined}
+					</div>
+				);
+			})}
+		</div>
+	);
 };

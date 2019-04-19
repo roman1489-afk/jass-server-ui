@@ -159,7 +159,6 @@ const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
 				break;
 			case JassAppConstants.SUGGEST_CARD:
 				this.state.suggestedCard = Card.createFromObject(action.data);
-				console.log(this.state.suggestedCard);
 				this.emit('change');
 				break;
 			case JassAppConstants.CHOOSE_CARD:
@@ -168,6 +167,7 @@ const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
 					return !card.equals(chosenCard);
 				});
 				this.state.status = GameState.PLAYED_CARD;
+				this.state.suggestedCard = null;
 				this.emit('change');
 				break;
 			case JassAppConstants.REJECT_CARD:
