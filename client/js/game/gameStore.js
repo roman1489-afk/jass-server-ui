@@ -51,8 +51,8 @@ const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
 		playerSeating: ['bottom', 'right', 'top', 'left'],
 		tableCards: [],
 		playerCards: [],
-		suggested_trumpf: null,
-		suggested_card: null,
+		suggestedTrumpf: null,
+		suggestedCard: null,
 		startingPlayerIndex: 0,
 		nextStartingPlayerIndex: 0,
 		roundPlayerIndex: 0,
@@ -131,13 +131,12 @@ const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
 				this.emit('change');
 				break;
 			case JassAppConstants.SUGGEST_TRUMPF:
-				this.state.suggested_trumpf = action.data;
-				console.log(this.state.suggested_trumpf);
+				this.state.suggestedTrumpf = action.data;
 				this.emit('change');
 				break;
 			case JassAppConstants.CHOOSE_TRUMPF:
 				this.state.status = GameState.TRUMPF_CHOSEN;
-				this.state.suggested_trumpf = null;
+				this.state.suggestedTrumpf = null;
 				this.state.tableCards = [];
 				this.emit('change');
 				break;
@@ -159,8 +158,8 @@ const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
 				this.emit('change');
 				break;
 			case JassAppConstants.SUGGEST_CARD:
-				this.state.suggested_card = Card.createFromObject(action.data);
-				console.log(this.state.suggested_card);
+				this.state.suggestedCard = Card.createFromObject(action.data);
+				console.log(this.state.suggestedCard);
 				this.emit('change');
 				break;
 			case JassAppConstants.CHOOSE_CARD:

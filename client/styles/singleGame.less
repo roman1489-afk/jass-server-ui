@@ -68,7 +68,7 @@
 	  width: 170px;
 	}
 
-	  & > div {
+	& > div {
 	  display: inline-block;
 	  border-radius: 5px;
 
@@ -142,7 +142,7 @@
 	  img.add-bot-icon {
 		height: 15px;
 		@media @phone {
-		  height:10px;
+		  height: 10px;
 		}
 		padding: 0 5px 0 0;
 		cursor: pointer;
@@ -294,10 +294,6 @@
 	  position: absolute;
 	  top: 10px;
 	  right: 10px;
-
-	  &.hidden {
-		display: none;
-	  }
 	}
 
 	#shift {
@@ -313,10 +309,6 @@
 	  right: 70px;
 	  @media @phone {
 		right: 50px;
-	  }
-
-	  &.hidden {
-		display: none;
 	  }
 	}
   }
@@ -412,17 +404,32 @@
 	border-radius: 10px;
 	background-color: rgba(0, 0, 0, 0.5);
 
-	img {
+	div {
 	  display: inline-block;
 	  margin: 5px 10px;
+	  line-height: 100px;
 	  width: 60px;
 	  height: 60px;
-	  line-height: 100px;
-	  border-radius: 50%;
-	  cursor: pointer;
+	  position: relative;
 
-	  &:hover {
-		box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.5);
+	  img {
+		border-radius: 50%;
+	  }
+
+	  .trumpf {
+		cursor: pointer;
+		&:hover {
+		  box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.5);
+		}
+	  }
+
+	  .recommended {
+		z-index: 2;
+		position: absolute;
+		top: -20px;
+		right: -20px;
+		width: 40px;
+		height: 40px;
 	  }
 	}
   }
@@ -448,7 +455,7 @@
 	  left: 0;
 	  transform: translateX(-75%);
 	  @media @phone {
-	  	transform: translateX(0%);
+		transform: translateX(0%);
 	  }
 	  text-align: center;
 	  padding: 20px;
@@ -523,7 +530,7 @@
 	border: 1px solid @white;
 	border-radius: 10px;
 	@media @phone {
-		border-radius: 5px;
+	  border-radius: 5px;
 	}
 
 	cursor: pointer;
@@ -550,7 +557,7 @@
 	  h3 {
 		margin: 10px 0 0;
 		@media @phone {
-			margin: 1px 0 0;
+		  margin: 1px 0 0;
 		}
 		max-width: 300px;
 	  }

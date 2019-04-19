@@ -134,7 +134,7 @@ describe('JassTable Component', () => {
         let playerCards = actual.props.children[3];
         expect(playerCards.props.cards).to.eql(GameStore.state.playerCards);
         expect(playerCards.props.cardType).to.equal(GameStore.state.cardType);
-        expect(playerCards.props.state).to.equal(GameStore.state.status);
+        expect(playerCards.props.status).to.equal(GameStore.state.status);
         expect(playerCards.props.tableCards).to.equal(GameStore.state.tableCards);
         expect(playerCards.props.mode).to.equal(GameStore.state.mode);
         expect(playerCards.props.color).to.equal(GameStore.state.color);

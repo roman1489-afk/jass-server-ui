@@ -57,7 +57,8 @@ export default React.createClass({
                         return (<PlayerCards
                             cards={playerCards}
                             cardType={state.cardType}
-                            state={state.status}
+                            suggestedCard={state.suggestedCard}
+                            status={state.status}
                             tableCards={state.tableCards}
                             mode={state.mode}
                             color={state.color}
@@ -66,7 +67,7 @@ export default React.createClass({
                 })()}
                 {(() => {
                     if (state.status === GameState.REQUESTING_TRUMPF) {
-                        return <RequestTrumpf isGeschoben={state.isGeschoben} cardType={state.cardType} />;
+                        return <RequestTrumpf isGeschoben={state.isGeschoben} cardType={state.cardType} suggestedTrumpf={state.suggestedTrumpf} />;
                     }
                 })()}
                 {(() => {

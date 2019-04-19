@@ -38,7 +38,7 @@ describe('PlayerCards Component', () => {
 
     it('should add class onTurn when requesting card', () => {
         let props = {
-            state: GameState.REQUESTING_CARD
+            status: GameState.REQUESTING_CARD
         };
 
         shallowRenderer.render(React.createElement(PlayerCards, props));
@@ -57,7 +57,7 @@ describe('PlayerCards Component', () => {
                     Card.create(6, CardColor.HEARTS),
                     Card.create(11, CardColor.CLUBS)
                 ],
-                state: GameState.REQUESTING_CARD
+                status: GameState.REQUESTING_CARD
             },
             sortedCards = [
                 {
@@ -124,7 +124,7 @@ describe('PlayerCards Component', () => {
             tableCards: [
                 Card.create(9, CardColor.HEARTS)
             ],
-            state: GameState.REQUESTING_CARD
+            status: GameState.REQUESTING_CARD
         };
 
         shallowRenderer.render(React.createElement(PlayerCards, props));
@@ -145,7 +145,7 @@ describe('PlayerCards Component', () => {
             tableCards: [
                 Card.create(9, CardColor.HEARTS)
             ],
-            state: GameState.REQUESTING_TRUMPF
+            status: GameState.REQUESTING_TRUMPF
         };
 
         shallowRenderer.render(React.createElement(PlayerCards, props));

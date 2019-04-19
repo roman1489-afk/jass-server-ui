@@ -44,19 +44,19 @@ describe('RequestTrumpf Component', () => {
 
         let children = actual.props.children;
         expect(children).to.have.length(7);
-        children[0].props.onClick();
+        children[0].props.children[0].props.onClick();
         sinon.assert.calledWith(chooseTrumpfSpy, GameMode.TRUMPF, CardColor.HEARTS);
-        children[1].props.onClick();
+        children[1].props.children[0].props.onClick();
         sinon.assert.calledWith(chooseTrumpfSpy, GameMode.TRUMPF, CardColor.DIAMONDS);
-        children[2].props.onClick();
+        children[2].props.children[0].props.onClick();
         sinon.assert.calledWith(chooseTrumpfSpy, GameMode.TRUMPF, CardColor.CLUBS);
-        children[3].props.onClick();
+        children[3].props.children[0].props.onClick();
         sinon.assert.calledWith(chooseTrumpfSpy, GameMode.TRUMPF, CardColor.SPADES);
-        children[4].props.onClick();
+        children[4].props.children[0].props.onClick();
         sinon.assert.calledWith(chooseTrumpfSpy, GameMode.UNDEUFE);
-        children[5].props.onClick();
+        children[5].props.children[0].props.onClick();
         sinon.assert.calledWith(chooseTrumpfSpy, GameMode.OBEABE);
-        children[6].props.onClick();
+        children[6].props.children[0].props.onClick();
         sinon.assert.calledWith(chooseTrumpfSpy, GameMode.SCHIEBE);
         sinon.assert.callCount(chooseTrumpfSpy, 7);
     });
@@ -82,14 +82,14 @@ describe('RequestTrumpf Component', () => {
         shallowRenderer.render(React.createElement(RequestTrumpf, props));
         let actual = shallowRenderer.getRenderOutput();
 
-        expect(actual.props.children[0].props.src).to.contain(CardType.GERMAN);
+        expect(actual.props.children[0].props.children[0].props.src).to.contain(CardType.GERMAN);
 
         props.cardType = CardType.FRENCH;
 
         shallowRenderer.render(React.createElement(RequestTrumpf, props));
         actual = shallowRenderer.getRenderOutput();
 
-        expect(actual.props.children[0].props.src).to.contain(CardType.FRENCH);
+        expect(actual.props.children[0].props.children[0].props.src).to.contain(CardType.FRENCH);
     });
 
     it('should bind the correct arguments to onClick handler', () => {
@@ -109,13 +109,13 @@ describe('RequestTrumpf Component', () => {
         let actual = shallowRenderer.getRenderOutput();
 
         let children = actual.props.children;
-        children[0].props.onClick();
-        children[1].props.onClick();
-        children[2].props.onClick();
-        children[3].props.onClick();
-        children[4].props.onClick();
-        children[5].props.onClick();
-        children[6].props.onClick();
+        children[0].props.children[0].props.onClick();
+        children[1].props.children[0].props.onClick();
+        children[2].props.children[0].props.onClick();
+        children[3].props.children[0].props.onClick();
+        children[4].props.children[0].props.onClick();
+        children[5].props.children[0].props.onClick();
+        children[6].props.children[0].props.onClick();
         sinon.assert.calledOnce(heartSpy);
         sinon.assert.calledOnce(diamondsSpy);
         sinon.assert.calledOnce(clubsSpy);
