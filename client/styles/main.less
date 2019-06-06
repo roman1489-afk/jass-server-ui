@@ -15,6 +15,22 @@ html, body {
   margin: 0;
   padding: 0;
   min-height: 100%;
+  position: relative; /* REQUIRED Sets up positioning for your footer */
+}
+
+#sticky {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  background: burlywood;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  z-index: 2; /* Required for pointer-events to work */
+  position: fixed; /* Here's what sticks it */
+  bottom: 0; /* to the bottom of the window */
+  left: 0; /* and to the left of the window */
 }
 
 // Media Query Helpers: https://stackoverflow.com/a/26432624/3308084
