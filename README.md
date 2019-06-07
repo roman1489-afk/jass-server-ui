@@ -4,6 +4,8 @@
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
+If this Server should be used with the JassTheRipper bot, at least 2GB RAM and multiple CPUs are recommended.
+
 ### Wiki
 https://github.com/webplatformz/challenge/wiki
 
@@ -47,7 +49,7 @@ $ env TOURNAMENT_LOGGING=true PORT=80 MAX_POINTS=1000 npm start
 Run the server as a background process on a production server:
 ```sh
 $ sudo npm run start # this has to be run first in order to build the app
-$ sudo nohup sh start.sh &  
+$ sudo nohup sh start_https.sh &
 ```
 
 ### Docker Container
@@ -124,3 +126,14 @@ $ grep -or "BROADCAST_WINNER_TEAM\",\"data\":{\"name\":\"Team 1\",\"points\":.*"
 - WebSockets
 - React
 - Flux
+
+## Connect to server
+`ssh -i ~/.ssh/digitalocean root@46.101.183.128`
+
+## SSH certificates
+- used for certificate setup
+- run server with `node server/certbot_server.js`
+- on client system run `sudo certbot certonly --manual`
+- make sure the filename and the file's content in certbot/.well-known/acme-challenge match with the output of the above command!
+- auto renewal every 60 minutes: run `sudo crontab -e` and add: `59 * * * * sudo certbot renew`
+- stop certbot_server
