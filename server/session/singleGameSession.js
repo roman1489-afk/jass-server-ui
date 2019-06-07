@@ -183,7 +183,13 @@ const Session = {
 		let resultProxy;
 		if (tournamentLogging) {
 			let fs = require('fs');
-			fs.mkdirSync(tournamentLoggingDir, {recursive: true});
+			try {
+				if (!fs.existsSync(tournamentLoggingDir)) {
+					fs.mkdirSync(tournamentLoggingDir, {recursive: true});
+				}
+			} catch(err) {
+				console.error(err)
+			}
 			// set local time
 			let dateInCurrentTimeZone = new Date();
 			let hoursOffset = (dateInCurrentTimeZone.getTimezoneOffset() / 60) * (-1);
