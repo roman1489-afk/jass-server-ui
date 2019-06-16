@@ -83,7 +83,7 @@
 		opacity: 0.25;
 	  }
 
-	  &:hover{
+	  &:hover {
 		box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.5);
 	  }
 	}
@@ -345,7 +345,13 @@
 
   #playerCards {
 	position: fixed;
-	bottom: 0;
+	bottom: 100px;
+	@media @tablet {
+	  bottom: 50px;
+	}
+	@media @phone {
+	  bottom: -25px;
+	}
 	left: -7%;
 	right: 0;
 	height: 150px;
