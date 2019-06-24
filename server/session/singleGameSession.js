@@ -84,7 +84,7 @@ function createPlayer(session, webSocket, playerName, chosenTeamIndex, isHuman) 
 
 // from http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
 function uuidv4() {
-	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
 		const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
 		return v.toString(16);
 	});
@@ -132,6 +132,8 @@ function registerClientAndBroadcastSessionJoined(session, webSocket, playerJoine
 
 const Session = {
 	maxPoints: EnvironmentUtil.getMaxPoints(),
+	orthogonalCardsEnabled: EnvironmentUtil.getOrthogonalCardsEnabled(),
+	oldDeckCards: null,
 	startingPlayer: 0,
 	type: SessionType.SINGLE_GAME,
 	finishGame: undefined,
@@ -147,7 +149,11 @@ const Session = {
 		registerClientAndBroadcastSessionJoined(this, webSocket, player);
 
 		if (isHuman)
-			startJassTheRipperBot({sessionName: this.name, chosenTeamIndex: chosenTeamIndex, advisedPlayerName: playerName});
+			startJassTheRipperBot({
+				sessionName: this.name,
+				chosenTeamIndex: chosenTeamIndex,
+				advisedPlayerName: playerName
+			});
 
 		// Why does there have to be a joinBotListener for every player added?
 		this.joinBotListeners.push(this.clientApi.subscribeToJoiningBotsMessage(webSocket));
@@ -187,7 +193,7 @@ const Session = {
 				if (!fs.existsSync(tournamentLoggingDir)) {
 					fs.mkdirSync(tournamentLoggingDir, {recursive: true});
 				}
-			} catch(err) {
+			} catch (err) {
 				console.error(err)
 			}
 			// set local time
@@ -237,7 +243,14 @@ const Session = {
 
 	gameCycle(seed = 0, nextStartingPlayer = this.getNextStartingPlayer()) {
 		let players = this.players.slice();
-		let game = Game.create(players, this.maxPoints, this.players[nextStartingPlayer], this.clientApi, seed);
+		let game = Game.create(players, this.maxPoints, this.players[nextStartingPlayer], this.clientApi, seed, this.oldDeckCards);
+
+		if (this.orthogonalCardsEnabled) {
+			if (!this.oldDeckCards)
+				this.oldDeckCards = game.deckCards;
+			else
+				this.oldDeckCards = null;
+		}
 
 		return game.start().then(() => {
 			let pointsTeamA = this.teams[0].points;

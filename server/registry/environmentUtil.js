@@ -19,6 +19,10 @@ const EnvironmentUtil = {
 		return Boolean(process.env.TOURNAMENT_COUNTING) || false;
 	},
 
+	getOrthogonalCardsEnabled() {
+		return Boolean(process.env.ORTHOGONAL_CARDS_ENABLED) || false;
+	},
+
 	getTournamentRounds() {
 		return Number(process.env.TOURNAMENT_ROUNDS) || 1;
 	},

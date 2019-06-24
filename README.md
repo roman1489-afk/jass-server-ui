@@ -131,7 +131,6 @@ $ grep -or "BROADCAST_WINNER_TEAM\",\"data\":{\"name\":\"Team 1\",\"points\":.*"
 `ssh -i ~/.ssh/digitalocean root@46.101.183.128`
 
 ## SSH certificates
-- used for certificate setup
 - run server with `node server/certbot_server.js`
 - on client system run `sudo certbot certonly --manual`
 - make sure the filename and the file's content in certbot/.well-known/acme-challenge match with the output of the above command!

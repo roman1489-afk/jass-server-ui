@@ -1,6 +1,3 @@
-import {GameMode} from '../../../shared/game/gameMode';
-
-
 const Player = {
 
 		dealCards(cards) {
