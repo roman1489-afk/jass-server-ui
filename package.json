@@ -32,6 +32,7 @@
     "start:orthogonalcards": "cross-env ORTHOGONAL_CARDS_ENABLED=true npm start",
     "start:80": "cross-env PORT=80 npm start",
     "start:443": "cross-env PORT=443 npm start",
+    "start:80:tournament": "cross-env PORT=80 TOURNAMENT_LOGGING=true TOURNAMENT_COUNTING=true npm start",
     "start:tournament": "cross-env TOURNAMENT_LOGGING=true TOURNAMENT_COUNTING=true npm start",
     "start:tournament:1": "cross-env TOURNAMENT_LOGGING=true TOURNAMENT_ROUNDS=1 MAX_POINTS=1000 TOURNAMENT_COUNTING=true npm start",
     "start:tournament:5": "cross-env TOURNAMENT_LOGGING=true TOURNAMENT_ROUNDS=5 MAX_POINTS=1000 TOURNAMENT_COUNTING=true npm start",

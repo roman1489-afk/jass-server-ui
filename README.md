@@ -127,8 +127,6 @@ $ grep -or "BROADCAST_WINNER_TEAM\",\"data\":{\"name\":\"Team 1\",\"points\":.*"
 - React
 - Flux
 
-## Connect to server
-`ssh -i ~/.ssh/digitalocean root@46.101.183.128`
 
 ## SSH certificates
 - run server with `node server/certbot_server.js`
