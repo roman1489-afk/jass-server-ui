@@ -218,6 +218,7 @@ const GameStore = Object.assign(Object.create(EventEmitter.prototype), {
 						if (stateTeam.name === team.name) {
 							stateTeam.points = team.points;
 							stateTeam.currentRoundPoints = team.currentRoundPoints;
+							stateTeam.myRound = team.myRound;
 						}
 					});
 				});

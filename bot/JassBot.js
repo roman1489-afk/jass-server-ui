@@ -38,6 +38,7 @@ let JassBot = {
 
         if (message.type === MessageType.REQUEST_CARD.name) {
             let handCard = this.giveValidCardFromHand(this.mapCardsFromJson(message.data), this.handcards);
+            console.log('Bot has choosen:' + handCard);
             this.handcards.splice(this.handcards.indexOf(handCard), 1);
             let chooseCardResonse = messages.create(MessageType.CHOOSE_CARD.name, handCard);
             this.client.send(JSON.stringify(chooseCardResonse));

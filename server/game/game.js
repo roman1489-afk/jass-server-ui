@@ -68,11 +68,11 @@ let Game = {
 export function create(players, maxPoints, startPlayer, clientApi, seed = 0, oldDeckCards = null) {
 	let game = Object.create(Game);
 	game.deck = Deck.create(seed, oldDeckCards);
+	//console.log('Rounds:' + game.deck.getRounds);
 	game.deckCards = game.deck.cards.slice(); // Store copy for potential future use for orthogonal cards enabled mode
 	players.forEach(player => {
 		game.deck.deal(player, 9);
 	});
-
 	game.players = players;
 	game.maxPoints = maxPoints;
 	game.startPlayer = startPlayer;

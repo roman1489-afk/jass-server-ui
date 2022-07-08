@@ -148,14 +148,16 @@ const Session = {
 		insertPlayer(this, player);
 		registerClientAndBroadcastSessionJoined(this, webSocket, player);
 
-		if (isHuman)
+		// why if isHuman we start a bot?
+		/*if (isHuman)
 			startJassTheRipperBot({
 				sessionName: this.name,
 				chosenTeamIndex: chosenTeamIndex,
 				advisedPlayerName: playerName
-			});
+			});*/
 
 		// Why does there have to be a joinBotListener for every player added?
+
 		this.joinBotListeners.push(this.clientApi.subscribeToJoiningBotsMessage(webSocket));
 	},
 
@@ -187,22 +189,23 @@ const Session = {
 		this.joinBotListeners.forEach(joinBotListener => joinBotListener());
 
 		let resultProxy;
-		if (tournamentLogging) {
-			let fs = require('fs');
-			try {
-				if (!fs.existsSync(tournamentLoggingDir)) {
-					fs.mkdirSync(tournamentLoggingDir, {recursive: true});
-				}
-			} catch (err) {
-				console.error(err)
+
+		let fs = require('fs');
+		try {
+			if (!fs.existsSync(tournamentLoggingDir)) {
+				fs.mkdirSync(tournamentLoggingDir, {recursive: true});
 			}
-			// set local time
-			let dateInCurrentTimeZone = new Date();
-			let hoursOffset = (dateInCurrentTimeZone.getTimezoneOffset() / 60) * (-1);
-			dateInCurrentTimeZone.setHours(dateInCurrentTimeZone.getHours() + hoursOffset);
-			resultProxy = JsonResultProxy.create(`${tournamentLoggingDir}/${this.players[0].name}.vs.${this.players[1].name}.${dateInCurrentTimeZone.toISOString()}`);
-			this.clientApi.setCommunicationProxy(resultProxy);
+		} catch (err) {
+			console.error(err)
 		}
+		// set local time
+		let dateInCurrentTimeZone = new Date();
+		let today = dateInCurrentTimeZone.toISOString().slice(0, 10)
+		let timeNow = `${dateInCurrentTimeZone.getHours()}-${dateInCurrentTimeZone.getMinutes()}`;
+		let todayFormat = today.concat('-', timeNow);
+		resultProxy = JsonResultProxy.create(`${tournamentLoggingDir}/${this.players[0].name} vs ${this.players[1].name}_${todayFormat}`);
+		this.clientApi.setCommunicationProxy(resultProxy);
+
 		this.clientApi.broadcastTeams(createTeamsArrayForClient(this));
 
 		return new Promise((resolve) => {
@@ -242,6 +245,7 @@ const Session = {
 	},
 
 	gameCycle(seed = 0, nextStartingPlayer = this.getNextStartingPlayer()) {
+		this.teams[0].myRound++;
 		let players = this.players.slice();
 		let game = Game.create(players, this.maxPoints, this.players[nextStartingPlayer], this.clientApi, seed, this.oldDeckCards);
 
@@ -252,15 +256,19 @@ const Session = {
 				this.oldDeckCards = null;
 		}
 
+		// decider if the game is finished or not!
 		return game.start().then(() => {
 			let pointsTeamA = this.teams[0].points;
 			let pointsTeamB = this.teams[1].points;
 
-			if (pointsTeamA > pointsTeamB && pointsTeamA >= this.maxPoints) {
+			//for our experiment the amount of rounds is set to 10!
+			console.log('Amount of rounds:' + game.deck.getRounds);
+			console.log('Team 1 currentRound:' + this.teams[0].myRound);
+			if (pointsTeamA > pointsTeamB && (game.deck.getRounds === 24)) {
 				return this.teams[0];
 			}
 
-			if (pointsTeamB > pointsTeamA && pointsTeamB >= this.maxPoints) {
+			if (pointsTeamB > pointsTeamA && (game.deck.getRounds === 24)) {
 				return this.teams[1];
 			}
 
