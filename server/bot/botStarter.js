@@ -35,9 +35,9 @@ export function startJassTheRipperBot({sessionName, chosenTeamIndex, advisedPlay
 // working to start game with random bots, for simplification under the function name JassTheRipperBot. BUT it is random!
 export function startJassTheRipperBot({sessionName, chosenTeamIndex}) {
 	console.log('Starting Random Bot...');
-	console.log(sessionName);
-	console.log(chosenTeamIndex);
-	console.log(composeUrl());
+	//console.log(sessionName);
+	//console.log(chosenTeamIndex);
+	//console.log(composeUrl());
 	//let botUrl = 'http://jass-agent.abiz.ch/tiresias';
 	let botName = 'RandomBot';
 	createJassBot(botName, composeUrl(), sessionName, chosenTeamIndex);

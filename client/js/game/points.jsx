@@ -13,7 +13,7 @@ export default ({ showPoints, teams}) => (
                     {team.winner && <img className="points-trophy" src="/images/trophy.svg" />}
                     <h2 className="rounds">
                         {(team.name === 'Team 1') ? 'Rounds:' : '' }
-                        {(team.name === 'Team 1') ? ` ${teams[0].myRound}/24` : ''}
+                        {(team.name === 'Team 1') ? ` ${teams[0].myRound}/16` : ''}
                     </h2>
                     <h3>
                         {team.name}

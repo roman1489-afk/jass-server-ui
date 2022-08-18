@@ -80,6 +80,7 @@
     "less": "2.7.2",
     "lodash": "^4.17.11",
     "mkdirp": "0.5.1",
+    "node-fetch": "^2.6.7",
     "npm-run-all": "4.0.2",
     "react": "15.6.2",
     "react-addons-css-transition-group": "15.6.2",

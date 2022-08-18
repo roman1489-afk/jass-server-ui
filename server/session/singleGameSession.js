@@ -264,11 +264,11 @@ const Session = {
 			//for our experiment the amount of rounds is set to 10!
 			console.log('Amount of rounds:' + game.deck.getRounds);
 			console.log('Team 1 currentRound:' + this.teams[0].myRound);
-			if (pointsTeamA > pointsTeamB && (game.deck.getRounds === 24)) {
+			if (pointsTeamA > pointsTeamB && (game.deck.getRounds === 16)) {
 				return this.teams[0];
 			}
 
-			if (pointsTeamB > pointsTeamA && (game.deck.getRounds === 24)) {
+			if (pointsTeamB > pointsTeamA && (game.deck.getRounds === 16)) {
 				return this.teams[1];
 			}
 

@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 import WebSocket from 'ws';
 import * as GameType from '../server/game/gameType';
 import {GameMode} from '../shared/game/gameMode';
@@ -7,6 +9,7 @@ import Validation from '../shared/game/validation/validation';
 import * as messages from '../shared/messages/messages';
 import {MessageType} from '../shared/messages/messageType';
 import {SessionChoice} from '../shared/session/sessionChoice';
+import fetch from 'node-fetch';
 
 let JassBot = {
 
@@ -37,8 +40,184 @@ let JassBot = {
         }
 
         if (message.type === MessageType.REQUEST_CARD.name) {
+
+            //maybe ask here the bot from thomas for the best possible card instead of a random card.
+
+            const gameState = {
+              'dealer': 2,
+              'player': 1,
+              'trump': 2,
+              'forehand': 1,
+              'declared_trump': 1,
+              'hands': [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              'tricks': [
+                [
+                  -1,
+                  -1,
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  -1,
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  -1,
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  -1,
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  -1,
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  -1,
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  -1,
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  -1,
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  -1,
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  -1,
+                  -1,
+                  -1
+                ]
+              ],
+              'trick_winner': [
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1
+              ],
+              'trick_points': [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              'trick_first_player': [
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1,
+                -1
+              ],
+              'current_trick': [
+                -1,
+                -1,
+                -1,
+                -1
+              ],
+              'nr_tricks': 0,
+              'nr_cards_in_trick': 0,
+              'nr_played_cards': 0,
+              'points': [
+                0,
+                0
+              ]
+            };
+
+            fetch('http://jass-agent.abiz.ch/tiresias/action_play_card', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(gameState),
+            })
+              .then(response => {
+                  console.log('This is Response from Bot:...');
+                console.log(response);
+                //handCard = response;
+              })
+              .catch(err => {
+                console.log('This is Error from Fetch:...');
+                console.log(err);
+              });
+            
+
+
             let handCard = this.giveValidCardFromHand(this.mapCardsFromJson(message.data), this.handcards);
-            console.log('Bot has choosen:' + handCard);
+            console.log('Bot has choosen:' + JSON.stringify(chooseCardResonse));
             this.handcards.splice(this.handcards.indexOf(handCard), 1);
             let chooseCardResonse = messages.create(MessageType.CHOOSE_CARD.name, handCard);
             this.client.send(JSON.stringify(chooseCardResonse));

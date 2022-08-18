@@ -136,6 +136,7 @@ const ClientApi = {
 	subscribeToJoiningBotsMessage(webSocket) {
 		return this.subscribeMessage(webSocket, MessageType.JOIN_BOT, (message) => {
 			startJassTheRipperBot(message.data);
+			console.log(message.data);
 		});
 	},
 
