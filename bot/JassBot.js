@@ -131,7 +131,13 @@ let JassBot = {
         }
     },
 
-    //new for Thomas Bot response.
+    /**
+     * Searches for the correct card in the hand of the players
+     * @param {array} tableCards card already on the table
+     * @param {array} handCards cards left in players hand
+     * @param {JSON} chosenCard card chosen from the bot via API call
+     * @returns {*} card from handCards that matched the chosenCard
+     */
     giveBotResponseCard(tableCards, handCards, chosenCard) {
         let validation = Validation.create(this.gameType.mode, this.gameType.trumpfColor);
         //console.log('CARD CHOSEN: ');
@@ -145,10 +151,14 @@ let JassBot = {
                   return handCard;
                 }
             }
-
         }
     },
 
+    /**
+     * Translates the card from the API call into a card, that has the format of the jass-server-ui
+     * @param {JSON} response card from the API call
+     * @returns {{number: number, color: string}} card in jass-server-ui format
+     */
     cardTransition(response) {
         var finalCard = {
             'number': 5,
@@ -195,6 +205,11 @@ let JassBot = {
         return finalCard;
     },
 
+    /**
+     * Translates the trump answer from the API call into jass-server-ui format.
+     * @param {JSON} response chosen trump from the bot
+     * @returns {{mode: *, trumpfColor: *}} trump in jass-server-ui format
+     */
     trumpTransition(response){
 
         let trumpTemp = response.trump;
@@ -228,11 +243,14 @@ let JassBot = {
     }
 };
 
-//Responsible for the  REST API-call to a specific Bot.
+/**
+ * Fetches an API card request to a bot.
+ * @param {JSON} currentState this is the gameState of the current Game
+ * @returns {Promise<*>} if successful we get a card, chosen from the bot
+ */
 async function fetchApiCardRequest(currentState) {
 
     try {
-
         //console.log(`InFetch state::: ${JSON.stringify(currentState)}`);
 
         let response = await fetch('http://jass-agent.abiz.ch/tiresias/action_play_card', {
@@ -250,7 +268,12 @@ async function fetchApiCardRequest(currentState) {
     }
 }
 
-//Responsible for the  REST API-call to a specific Bot.
+
+/**
+ * Fetches an API trump request to a bot.
+ * @param {JSON} currentState this is the gameState of the current Game
+ * @returns {Promise<*>} if successful we get a trump, chosen from the bot
+ */
 async function fetchApiTrumpRequest(currentState) {
 
     try {
@@ -272,6 +295,11 @@ async function fetchApiTrumpRequest(currentState) {
     }
 }
 
+/**
+ * Helper function to get a delay. Used to ensure the API calls.
+ * @param {number} time how much time to wait in milliseconds
+ * @returns {Promise<unknown>} after the set time the flow of the program resumes
+ */
 function delay(time) {
   return new Promise(resolve => setTimeout(resolve, time));
 }
@@ -290,6 +318,3 @@ export function create(name, url = 'ws://localhost:3000', sessionName, teamToJoi
     clientBot.gameState = {};
     return clientBot;
 }
-
-
-

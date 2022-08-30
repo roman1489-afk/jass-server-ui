@@ -25,11 +25,9 @@ const Deck = {
 	}
 };
 
-// Amount of rounds played gets tracked. See singleGameSession for amount of rounds the experiment lasts. E.g. 10
+// Amount of rounds played gets tracked. See singleGameSession for amount of rounds the experiment lasts. E.g. 16
 let rounds = 0;
 let gameNumber = 1;
-
-
 
 
 export function create(seed = 0, oldDeckCards = null) {
@@ -41,28 +39,40 @@ export function create(seed = 0, oldDeckCards = null) {
 	//console.log(deck.cards);
 	rounds++;
 
-	//helps to switch two cards in the deck
-	function helpSort(number1 = [], number2 = []){
-		number1.forEach((num1, index) => {
-			const num2 = number2[index];
+	/**
+	 * Sorts the Deck in a given order
+	 * @param {array} helpArray helper array
+	 * @param {array} order array with the order in which we want the deck
+	 */
+	function helpSort(helpArray = [], order = []){
+		helpArray.forEach((num1, index) => {
+			const num2 = order[index];
 			deck.cards[num1] = [deck.cards[num2], deck.cards[num2] = deck.cards[num1]][0];
 			});
 	}
 
-	//returns array of stated length in numbers
+	/**
+	 * Helper function to create an Array of length 26, that is used to sort cards manually
+	 * @param {number} start always 0
+	 * @param {number} end always 26
+	 * @returns {number[]} helper array to sort cards manually
+	 */
 	function range(start, end) {
   		return Array.from({ length: end - start + 1 }, (_, i) => i);
 	}
 
-	//shifts the deck by 9 cards each
+	/**
+	 * Helper function to shift the existing deck, so that the hands of players are switched
+	 * @param {number} numbersOfShifts indicates the number of switches
+	 * @returns {*} the deck in correct order, that players will get different hands
+	 */
 	function shiftDeck(numbersOfShifts){
 		return deck.cards.push.apply(deck.cards, deck.cards.splice(0, numbersOfShifts));
 	}
 
-	//assign the sorted cards to our deck.
+	// assign the sorted cards to our deck.
 	// twist the array with the following line to get the same game but 1 player shifted back. (use 9 for shift three times or 18 to shift twice)
 	// deck.cards.push.apply(deck.cards, deck.cards.splice(0, 27));
-
 	switch(gameNumber){
 		case 1:
 			switch (rounds) {

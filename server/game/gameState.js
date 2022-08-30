@@ -2,15 +2,19 @@
 /*jshint esversion: 8 */
 /*jshint esversion: 6 */
 
+/**
+ * Gamestate to keep track of cards played, trump, points etc. This is then used for the API calls see: .jass-server-ui-4/bot/JassBot.js
+ * @type {{update: GameState.update, readonly getGameState: {jassTyp: string, gameId: number, trump: number, currentPlayer: number, dealer: number, tricks: *[], playerView: number, version: string, forehand: number, player: [{hand: *[]},{hand: *[]},{hand: *[]},{hand: *[]}]}|{default: number}}}
+ */
 const GameState = {
 
-// updates the gameState according to the information it is getting from the message
-// in case 'trump' its getting this:
-// {
-//   type: 'BROADCAST_TRUMPF',
-//   data: { mode: 'TRUMPF', trumpfColor: 'HEARTS' }
-// }
-   update: function update(type, message){
+    // updates the gameState according to the information it is getting from the message
+    // in case 'trump' its getting this:
+    // {
+    //   type: 'BROADCAST_TRUMPF',
+    //   data: { mode: 'TRUMPF', trumpfColor: 'HEARTS' }
+    // }
+    update: function update(type, message){
 
       switch(type) {
         case 'trump':
@@ -315,6 +319,10 @@ let hand1 = [];
 let hand2 = [];
 let hand3 = [];
 
+/**
+ * This generates the JSON, that is used for the API calls.
+ * @returns {{jassTyp: string, gameId: number, trump: number, currentPlayer: number, dealer: number, tricks: *[], playerView: number, version: string, forehand: number, player: [{hand: *[]},{hand: *[]},{hand: *[]},{hand: *[]}]}|{default: number}} the agent from thomas needs this format
+ */
 export function createExport(){
 
   //hand1 should be cards from OUR player 3 and hand3 should have cards from OUR player 1
@@ -437,7 +445,11 @@ export function createExport(){
   return myState;
 }
 
-//helps to switch two cards in the deck
+/**
+ * Swaps the hand into a hand, that can be used by the bot from thomas
+ * @param {array} hand the hand in jass-server-ui format
+ * @returns {*[]} the hand in API call usable format
+ */
 function handleCardToHands(hand = []){
   let finalHand = hand;
   for (let i = 0; i < finalHand.length; i++) {
@@ -448,6 +460,11 @@ function handleCardToHands(hand = []){
 }
 
 //translate the cards from our setup into the one from thomas.
+/**
+ * Translate the cards from our setup into the one from thomas
+ * @param {json} card card to translate
+ * @returns {string} translated card
+ */
 function cardTransition(card){
   var finalCard = '';
 
@@ -491,6 +508,10 @@ function cardTransition(card){
   return finalCard;
 }
 
+/**
+ * Finds out, where the next free slot in the tricks is.
+ * @returns {number} this is the trick number, that a card needs to be put in
+ */
 function helpFindFreeSlot(){
 
   let cardArray = [];
@@ -515,6 +536,10 @@ function helpFindFreeSlot(){
   }
 }
 
+/**
+ * simply resets the gameState
+ * @param {number} currentRounds if you want to have track about it but not really used
+ */
 function resetToDefault(currentRounds) {
   trump = -1;
   dealer = 1;
@@ -527,6 +552,10 @@ function resetToDefault(currentRounds) {
   hand3 = [];
 }
 
+/**
+ * This creates the gameState and returns it
+ * @returns {{update: GameState.update, readonly getGameState: {}}} gameState used for API calls
+ */
 export function create() {
   let gameState = Object.create(GameState);
 
