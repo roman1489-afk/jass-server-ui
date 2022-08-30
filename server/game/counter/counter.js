@@ -81,14 +81,16 @@ export function count(mode, cardColor, cardSet) {
         }
     });
 
-    result = calculateMultiplicator(mode, cardColor) * result;
+    //result = calculateMultiplicator(mode, cardColor) * result;
     return result;
 }
 
 export function calculateMatchValues(mode, cardColor) {
-    return 100 * calculateMultiplicator(mode, cardColor);
+    //return 100 * calculateMultiplicator(mode, cardColor);
+    return 100;
 }
 
 export function calculateLastStichValue(mode, cardColor) {
-    return 5 * calculateMultiplicator(mode, cardColor);
+    //return 5 * calculateMultiplicator(mode, cardColor);
+    return 5;
 }
