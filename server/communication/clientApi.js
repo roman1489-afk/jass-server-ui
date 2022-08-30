@@ -58,6 +58,10 @@ const ClientApi = {
 	broadcastTrumpf(gameType) {
 		this.clientCommunication.broadcast(this.clients, MessageType.BROADCAST_TRUMPF.name, gameType);
 	},
+	//new
+	broadcastGameState(state) {
+		this.clientCommunication.broadcast(this.clients, MessageType.BROADCAST_GAMESTATE.name, state);
+	},
 
 	broadcastCardPlayed(playedCards) {
 		this.clientCommunication.broadcast(this.clients, MessageType.PLAYED_CARDS.name, playedCards);
@@ -136,7 +140,6 @@ const ClientApi = {
 	subscribeToJoiningBotsMessage(webSocket) {
 		return this.subscribeMessage(webSocket, MessageType.JOIN_BOT, (message) => {
 			startJassTheRipperBot(message.data);
-			console.log(message.data);
 		});
 	},
 

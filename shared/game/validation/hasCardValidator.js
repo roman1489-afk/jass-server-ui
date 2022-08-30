@@ -2,7 +2,10 @@
 
 const HasCardValidator = {
     validate (validationParameter) {
+        //console.log(validationParameter);
         let cardToPlay = function(cardToPlay, handCard) {
+            //console.log(handCard);
+            //console.log(cardToPlay);
             return handCard.equals(cardToPlay);
         };
 

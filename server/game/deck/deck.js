@@ -18,7 +18,11 @@ const Deck = {
 
 	get getRounds(){
 		return rounds;
-    }
+    },
+
+	get getDeckCards(){
+		return deck.cards;
+	}
 };
 
 // Amount of rounds played gets tracked. See singleGameSession for amount of rounds the experiment lasts. E.g. 10
@@ -338,7 +342,6 @@ export function create(seed = 0, oldDeckCards = null) {
 			deck.cards = _.shuffle(cards);
 			break;
 	}
-
 			// Out commented is the random shuffle function, since we want preset games
 			/*
                 // If we have an old deck: rotate the deck by 9 cards so we can play the analogous game to the game before
@@ -351,7 +354,6 @@ export function create(seed = 0, oldDeckCards = null) {
                     else
                         deck.cards = SeededShuffle.shuffle(cards, seed, true);
                 }*/
-
 			console.log(deck.cards);
 			return deck;
 	}

@@ -1,4 +1,5 @@
 /*jshint esversion: 6 */
+/*jshint esversion: 8 */
 
 import WebSocket from 'ws';
 import * as GameType from '../server/game/gameType';
@@ -41,191 +42,60 @@ let JassBot = {
 
         if (message.type === MessageType.REQUEST_CARD.name) {
 
-            //maybe ask here the bot from thomas for the best possible card instead of a random card.
+            //returns the Card from Thomas bot. Format:
+            // {
+            //     "card": "D9"
+            // }
+            fetchApiCardRequest(this.gameState).then(data => {
+                this.botCard = data;
+            });
 
-            const gameState = {
-              'dealer': 2,
-              'player': 1,
-              'trump': 2,
-              'forehand': 1,
-              'declared_trump': 1,
-              'hands': [
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              'tricks': [
-                [
-                  -1,
-                  -1,
-                  -1,
-                  -1
-                ],
-                [
-                  -1,
-                  -1,
-                  -1,
-                  -1
-                ],
-                [
-                  -1,
-                  -1,
-                  -1,
-                  -1
-                ],
-                [
-                  -1,
-                  -1,
-                  -1,
-                  -1
-                ],
-                [
-                  -1,
-                  -1,
-                  -1,
-                  -1
-                ],
-                [
-                  -1,
-                  -1,
-                  -1,
-                  -1
-                ],
-                [
-                  -1,
-                  -1,
-                  -1,
-                  -1
-                ],
-                [
-                  -1,
-                  -1,
-                  -1,
-                  -1
-                ],
-                [
-                  -1,
-                  -1,
-                  -1,
-                  -1
-                ],
-                [
-                  -1,
-                  -1,
-                  -1,
-                  -1
-                ]
-              ],
-              'trick_winner': [
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1
-              ],
-              'trick_points': [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              'trick_first_player': [
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1,
-                -1
-              ],
-              'current_trick': [
-                -1,
-                -1,
-                -1,
-                -1
-              ],
-              'nr_tricks': 0,
-              'nr_cards_in_trick': 0,
-              'nr_played_cards': 0,
-              'points': [
-                0,
-                0
-              ]
-            };
+            delay(2000).then(() => {
 
-            fetch('http://jass-agent.abiz.ch/tiresias/action_play_card', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(gameState),
-            })
-              .then(response => {
-                  console.log('This is Response from Bot:...');
-                console.log(response);
-                //handCard = response;
-              })
-              .catch(err => {
-                console.log('This is Error from Fetch:...');
-                console.log(err);
-              });
-            
+                let correctCard = this.cardTransition(this.botCard);
+                let handCard2 = this.giveBotResponseCard(this.mapCardsFromJson(message.data), this.handcards, correctCard);
 
-
-            let handCard = this.giveValidCardFromHand(this.mapCardsFromJson(message.data), this.handcards);
-            console.log('Bot has choosen:' + JSON.stringify(chooseCardResonse));
-            this.handcards.splice(this.handcards.indexOf(handCard), 1);
-            let chooseCardResonse = messages.create(MessageType.CHOOSE_CARD.name, handCard);
-            this.client.send(JSON.stringify(chooseCardResonse));
+                //let handCard = this.giveValidCardFromHand(this.mapCardsFromJson(message.data), this.handcards);
+                this.handcards.splice(this.handcards.indexOf(handCard2), 1);
+                let chooseCardResonse = messages.create(MessageType.CHOOSE_CARD.name, handCard2);
+                this.client.send(JSON.stringify(chooseCardResonse));
+            });
         }
 
         if (message.type === MessageType.REQUEST_TRUMPF.name) {
-            let chooseTrumpfResponse = messages.create(MessageType.CHOOSE_TRUMPF.name, this.gameType);
-            this.client.send(JSON.stringify(chooseTrumpfResponse));
+
+            //returns the Trump from Thomas bot. Format:
+            // {
+            //     "trump": 1
+            // }
+            //DIAMONDS    = 0                         # type: int  # Ecken / Schellen
+            // D           = DIAMONDS
+            // HEARTS      = 1                         # type: int  # Herz / Rosen
+            // H           = HEARTS
+            // SPADES      = 2                         # type: int  # Schaufeln / Schilten
+            // S           = SPADES
+            // CLUBS       = 3                         # type: int  # Kreuz / Eichel
+            // C           = CLUBS
+            // OBE_ABE     = 4                         # type: int
+            // O           = OBE_ABE
+            // UNE_UFE     = 5                         # type: int
+            // U           = UNE_UFE
+
+            fetchApiTrumpRequest(this.gameState).then(data => {
+                this.botTrump = data;
+            });
+
+            delay(2000).then(() => {
+
+                let correctTrump = this.trumpTransition(this.botTrump);
+                //console.log(correctTrump);
+
+                let botsChosenTrump = messages.create(MessageType.CHOOSE_TRUMPF.name, this.trumpTransition(this.botTrump));
+                //console.log(botsChosenTrump);
+
+                //let chooseTrumpfResponse = messages.create(MessageType.CHOOSE_TRUMPF.name, this.gameType);
+                this.client.send(JSON.stringify(botsChosenTrump));
+            });
         }
 
         if (message.type === MessageType.REJECT_CARD.name) {
@@ -236,6 +106,10 @@ let JassBot = {
             if (message.data.mode !== GameMode.SCHIEBE) {
                 this.gameType = GameType.create(message.data.mode, message.data.trumpfColor);
             }
+        }
+        //new if the gameState is Broadcasted
+        if (message.type === MessageType.BROADCAST_GAMESTATE.name) {
+            this.gameState = message.data;
         }
     },
 
@@ -255,17 +129,167 @@ let JassBot = {
                 return handCard;
             }
         }
+    },
+
+    //new for Thomas Bot response.
+    giveBotResponseCard(tableCards, handCards, chosenCard) {
+        let validation = Validation.create(this.gameType.mode, this.gameType.trumpfColor);
+        //console.log('CARD CHOSEN: ');
+        //console.log(chosenCard);
+        for (let i = 0; i < handCards.length; i++) {
+            let handCard = handCards[i];
+            if(handCard.number === chosenCard.number && handCard.color === chosenCard.color){
+                if (validation.validate(tableCards, handCards, handCard)) {
+                  //console.log('VALIDATED: ');
+                  //console.log(handCard);
+                  return handCard;
+                }
+            }
+
+        }
+    },
+
+    cardTransition(response) {
+        var finalCard = {
+            'number': 5,
+            'color': 'EMPTY'
+        };
+
+        let cardString = response.card;
+        let [color, number] = [cardString.slice(0, 1), cardString.slice(1)];
+
+        switch (color) {
+            case 'D':
+                finalCard.color = 'DIAMONDS';
+                break;
+            case 'H':
+                finalCard.color = 'HEARTS';
+                break;
+            case 'S':
+                finalCard.color = 'SPADES';
+                break;
+            case 'C':
+                finalCard.color = 'CLUBS';
+                break;
+            default:
+                break;
+        }
+
+        switch (number) {
+            case 'A':
+                finalCard.number = 14;
+                break;
+            case 'K':
+                finalCard.number = 13;
+                break;
+            case 'Q':
+                finalCard.number = 12;
+                break;
+            case 'J':
+                finalCard.number = 11;
+                break;
+            default:
+                finalCard.number = parseInt(number);
+                break;
+        }
+        return finalCard;
+    },
+
+    trumpTransition(response){
+
+        let trumpTemp = response.trump;
+        let botMode;
+
+        switch (trumpTemp) {
+            case 0:
+                botMode = GameType.create(GameMode.TRUMPF, CardColor.DIAMONDS);
+                break;
+            case 1:
+                botMode = GameType.create(GameMode.TRUMPF, CardColor.HEARTS);
+                break;
+            case 2:
+                botMode = GameType.create(GameMode.TRUMPF, CardColor.SPADES);
+                break;
+            case 3:
+                botMode = GameType.create(GameMode.TRUMPF, CardColor.CLUBS);
+                break;
+            case 4:
+                //strange to give a color when undeufe/obeabe.
+                botMode = GameType.create(GameMode.OBEABE, CardColor.SPADES);
+                break;
+            case 5:
+                botMode = GameType.create(GameMode.UNDEUFE, CardColor.SPADES);
+                break;
+            default:
+                break;
+        }
+        //console.log(botMode);
+        return botMode;
     }
 };
+
+//Responsible for the  REST API-call to a specific Bot.
+async function fetchApiCardRequest(currentState) {
+
+    try {
+
+        //console.log(`InFetch state::: ${JSON.stringify(currentState)}`);
+
+        let response = await fetch('http://jass-agent.abiz.ch/tiresias/action_play_card', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(currentState),
+        });
+        let data = await response.json();
+        return data;
+
+    } catch (e){
+        console.log(e);
+    }
+}
+
+//Responsible for the  REST API-call to a specific Bot.
+async function fetchApiTrumpRequest(currentState) {
+
+    try {
+     //console.log(`InFetch state::: ${JSON.stringify(currentState)}`);
+
+     let response = await fetch('http://jass-agent.abiz.ch/tiresias/action_trump', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(currentState),
+            });
+
+     let data = await response.json();
+     return data;
+
+     } catch (e){
+        console.log(e);
+    }
+}
+
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
 
 export function create(name, url = 'ws://localhost:3000', sessionName, teamToJoin) {
     let clientBot = Object.create(JassBot);
     clientBot.handcards = [];
+    clientBot.botCard = {};
+    clientBot.botTrump = {};
     clientBot.client = new WebSocket(url);
     clientBot.client.on('message', clientBot.onMessage.bind(clientBot));
-    clientBot.name = name;
+    clientBot.name = 'Computer';
     clientBot.sessionName = sessionName;
     clientBot.teamToJoin = teamToJoin;
     clientBot.gameType = GameType.create(GameMode.TRUMPF, CardColor.SPADES);
+    clientBot.gameState = {};
     return clientBot;
 }
+
+
+

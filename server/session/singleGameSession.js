@@ -246,6 +246,8 @@ const Session = {
 
 	gameCycle(seed = 0, nextStartingPlayer = this.getNextStartingPlayer()) {
 		this.teams[0].myRound++;
+		this.teams[1].myRound++;
+
 		let players = this.players.slice();
 		let game = Game.create(players, this.maxPoints, this.players[nextStartingPlayer], this.clientApi, seed, this.oldDeckCards);
 

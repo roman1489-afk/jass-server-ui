@@ -74,6 +74,10 @@ export const MessageType = {
 	BROADCAST_TRUMPF: {
 		name: 'BROADCAST_TRUMPF'
 	},
+	//new
+	BROADCAST_GAMESTATE: {
+		name: 'BROADCAST_GAMESTATE'
+	},
 	BROADCAST_STICH: {
 		name: 'BROADCAST_STICH'
 	},

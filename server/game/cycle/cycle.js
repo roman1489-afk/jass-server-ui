@@ -7,10 +7,25 @@ const Cycle = {
         const handleChosenCard = (player, card) => {
             this.currentPlayer = player;
 
+            //console.log('UPDATE CORRECT PLAYER INSIDE CYCLE');
+            this.gameState.update('playerInCycle', player.seatId);
+	        this.clientApi.broadcastGameState(this.gameState.getGameState);
+
+
+
             if (this.validator.validate(this.playedCards, this.currentPlayer.cards, card)) {
                 this.playedCards.push(card);
                 this.currentPlayer.removeCard(card);
                 this.clientApi.broadcastCardPlayed(this.playedCards);
+
+                //console.log('TESTING CARDS');
+                //console.log(card);
+                this.gameState.update('addCards', card);
+                //console.log('DONE ADD CARD TO TRICK');
+                this.gameState.update('reduceHand', card);
+                //console.log('DONE REDUCE HAND');
+                this.clientApi.broadcastGameState(this.gameState.getGameState);
+
             } else {
                 this.currentPlayer.rejectCard(card, this.playedCards);
 
@@ -28,6 +43,11 @@ const Cycle = {
             let winnerTeam = winner.team;
             let loserTeam = getOtherTeam(winnerTeam);
             let actPoints = Counter.count(this.gameType.mode, this.gameType.trumpfColor, playedCards);
+
+            //console.log('TESTING ACT POINTS');
+            //console.log(actPoints);
+            this.gameState.update('points', actPoints);
+            this.clientApi.broadcastGameState(this.gameState.getGameState);
 
             winnerTeam.points += actPoints;
             winnerTeam.currentRoundPoints += actPoints;
@@ -92,10 +112,10 @@ function rotatePlayersToCurrentPlayer(players, currentPlayer) {
     }
 }
 
-export function create(currentPlayer, players, clientApi, gameType) {
+export function create(currentPlayer, players, clientApi, gameType, gameState) {
     let cycle = Object.create(Cycle);
     cycle.currentPlayer = currentPlayer;
-
+    cycle.gameState = gameState;
     rotatePlayersToCurrentPlayer(players, currentPlayer);
     cycle.players = players;
     cycle.gameType = gameType;

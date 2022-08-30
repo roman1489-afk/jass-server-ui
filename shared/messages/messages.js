@@ -63,6 +63,14 @@ function createBroadcastTrumpf(gameType) {
 	};
 }
 
+//new
+function createBroadcastGameState(state) {
+	return {
+		type: MessageType.BROADCAST_GAMESTATE.name,
+		data: state
+	};
+}
+
 function createBroadcastStich(winner) {
 	return {
 		type: MessageType.BROADCAST_STICH.name,
@@ -245,6 +253,9 @@ export function create(messageType, ...data) {
 			return createSuggestTrumpf(...data);
 		case MessageType.BROADCAST_TRUMPF.name:
 			return createBroadcastTrumpf(...data);
+			//new
+		case MessageType.BROADCAST_GAMESTATE.name:
+			return createBroadcastGameState(...data);
 		case MessageType.BROADCAST_WINNER_TEAM.name:
 			return createBroadcastWinnerTeam(...data);
 		case MessageType.BROADCAST_STICH.name:
