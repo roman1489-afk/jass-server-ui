@@ -252,7 +252,7 @@ async function fetchApiCardRequest(currentState) {
 
     try {
         //console.log(`InFetch state::: ${JSON.stringify(currentState)}`);
-
+        console.log(currentState);
         let response = await fetch('http://jass-agent.abiz.ch/tiresias/action_play_card', {
             method: 'POST',
             headers: {

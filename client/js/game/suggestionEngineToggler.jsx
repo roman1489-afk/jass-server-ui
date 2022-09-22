@@ -5,9 +5,9 @@ export default (props) => {
 	let suggestionEnabled = props.suggestionEnabled;
 	return (
 		<div id="suggestionEngineToggler">
-			<img src={'/images/recommended.png'} className={suggestionEnabled ? '' : 'disabled'}
-				 onClick={() => JassActions.toggleSuggestionEngine(!suggestionEnabled)}
-				 alt={'Toggle Suggestion Engine'} title={'Toggle Suggestion Engine'}
+			<img src={'/images/IPT.png'} className={suggestionEnabled ? '' : 'disabled'}
+				 //onClick={() => JassActions.toggleSuggestionEngine(!suggestionEnabled)}
+				 alt={'Gesponsert von IPT'} title={'Gesponsert von IPT'}
 			/>
 		</div>
 	);

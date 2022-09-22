@@ -12,7 +12,7 @@ export default ({ showPoints, teams}) => (
                 <div key={team.name} className="points-team">
                     {team.winner && <img className="points-trophy" src="/images/trophy.svg" />}
                     <h2 className="rounds">
-                        {(team.name === 'Team 1') ? 'Rounds:' : '' }
+                        {(team.name === 'Team 1') ? 'Runden:' : '' }
                         {(team.name === 'Team 1') ? ` ${team.myRound}/16` : ''}
                     </h2>
                     <h3>
@@ -20,10 +20,10 @@ export default ({ showPoints, teams}) => (
                         {showPoints && <small> ({team.players[0].name} & {team.players[1].name})</small>}
                     </h3>
                     <div className="current-round-points">
-                        {(showPoints) ? 'Current Round: ' : ''}{team.currentRoundPoints}
+                        {(showPoints) ? 'Punkte in der Runde: ' : ''}{team.currentRoundPoints}
                     </div>
                     <div className="total-points">
-                        {(showPoints) ? 'Total: ' : ''}{team.points}
+                        {(showPoints) ? 'Totale Punkte: ' : ''}{team.points}
                     </div>
                 </div>
             );

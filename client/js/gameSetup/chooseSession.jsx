@@ -20,25 +20,25 @@ export default (props) => {
 
     return (
         <div id="chooseSession" className={(status !== GameSetupState.CHOOSE_SESSION ? 'hidden' : '')}>
-            <h1 className="jumbotron">Choose Session</h1>
+            <h1 className="jumbotron">Wähle ein Spiel aus</h1>
             <ExistingSessions sessions={props.setupState.sessions}/>
             <div className="session-choice">
-                <h2>Start a fresh single game</h2>
-                <input type="text" name="createNewSession" placeholder="Single Game Name..."
+                <h2>Starte ein neues Spiel</h2>
+                <input type="text" name="createNewSession" placeholder="Name des Spiels..."
                        onKeyPress={(event) => createNewSession(SessionType.SINGLE_GAME, false, event)}
                 />
-				<p>Press Enter to continue...</p>
+				<p>Drücke Enter um fortzufahren</p>
             </div>
             <div className="session-choice">
-				<h2>Start a fresh tournament</h2>
-                <input type="text" name="createNewTournament" placeholder="Tournament Name..."
+				<h2>Starte ein neues Turnier</h2>
+                <input type="text" name="createNewTournament" placeholder="Name des Turniers..."
                        onKeyPress={(event) => createNewSession(SessionType.TOURNAMENT, true, event)}
                 />
-				<p>Press Enter to continue...</p>
+				<p>Drücke Enter um fortzufahren</p>
             </div>
             <div className="session-choice">
-                <button type="button" name="autoJoin" onClick={JassActions.autojoinSession}>Just Join!</button>
-				<p>Join an existing single game or tournament or create a new one if none is running</p>
+                <button type="button" name="autoJoin" onClick={JassActions.autojoinSession}>Beitreten!</button>
+				<p>Tritt einem existierenden Spiel bei oder erstelle ein neues Spiel.</p>
             </div>
         </div>
     );

@@ -15,9 +15,9 @@ function choosePlayerName(event) {
 export default (props) => {
     return (
         <div id="requestPlayerName" className={(props.setupState === GameSetupState.SET_PLAYER_NAME ? '' : 'hidden')}>
-			<h1 className="jumbotron">Welcome to the Jass Server</h1>
-            <input type="text" placeholder="Player Name..." onKeyPress={choosePlayerName}/>
-            <p>Press Enter to continue...</p>
+			<h1 className="jumbotron">Willkommen auf dem Jass Server</h1>
+            <input type="text" placeholder="Spieler Name..." onKeyPress={choosePlayerName}/>
+            <p>Drücke Enter um fortzufahren...</p>
         </div>
     );
 };
