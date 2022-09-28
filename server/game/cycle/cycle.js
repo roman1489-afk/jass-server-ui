@@ -1,6 +1,11 @@
+/*jshint esversion: 6 */
+/*jshint esversion: 8 */
+
 import Validation from '../../../shared/game/validation/validation';
 import stichGranter from './stichGranter';
 import * as Counter from '../counter/counter';
+import * as messages from "../../../shared/messages/messages";
+import {MessageType} from "../../../shared/messages/messageType";
 
 const Cycle = {
     iterate() {
@@ -39,6 +44,13 @@ const Cycle = {
         const getOtherTeam = team => this.players.find(player => player.team !== team).team;
 
         const broadcastAndReturnWinner = (playedCards) => {
+
+            // visual delay for better gamefeeling of humasn players
+            // cards will lay on the carpet for 2 seconds after a "stich" 
+             delay(2000).then(() => {
+                console.log('worked');
+            });
+
             let winner = stichGranter.determineWinner(this.gameType.mode, this.gameType.trumpfColor, playedCards, this.players);
             let winnerTeam = winner.team;
             let loserTeam = getOtherTeam(winnerTeam);
@@ -111,6 +123,16 @@ function rotatePlayersToCurrentPlayer(players, currentPlayer) {
         players.push(players.shift());
     }
 }
+
+/**
+ * Helper function to get a delay. Used to ensure the API calls.
+ * @param {number} time how much time to wait in milliseconds
+ * @returns {Promise<unknown>} after the set time the flow of the program resumes
+ */
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
+
 
 export function create(currentPlayer, players, clientApi, gameType, gameState) {
     let cycle = Object.create(Cycle);

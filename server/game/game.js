@@ -85,6 +85,8 @@ let Game = {
 		return this.startPlayer.requestTrumpf(false)
 			.catch(error => transformErrorMessageToErrorObject(this.startPlayer, error))
 			.then((gameType) => {
+				console.log(gameType.mode);
+				console.log(gameType.trumpfColor);
 				if (gameType.mode === GameMode.SCHIEBE) {
 					this.clientApi.broadcastTrumpf(gameType);
 					return this.schieben();

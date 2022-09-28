@@ -48,9 +48,10 @@ let JassBot = {
             // }
             fetchApiCardRequest(this.gameState).then(data => {
                 this.botCard = data;
+                console.log(this.botCard);
             });
 
-            delay(2000).then(() => {
+            delay(3000).then(() => {
 
                 let correctCard = this.cardTransition(this.botCard);
                 let handCard2 = this.giveBotResponseCard(this.mapCardsFromJson(message.data), this.handcards, correctCard);
@@ -83,6 +84,7 @@ let JassBot = {
 
             fetchApiTrumpRequest(this.gameState).then(data => {
                 this.botTrump = data;
+                console.log(this.botTrump);
             });
 
             delay(2000).then(() => {
@@ -234,11 +236,16 @@ let JassBot = {
                 break;
             case 5:
                 botMode = GameType.create(GameMode.UNDEUFE, CardColor.SPADES);
+                break
+            //schiebe
+            case 10:
+                botMode = GameType.create(GameMode.SCHIEBE, CardColor.SPADES);
                 break;
             default:
                 break;
         }
-        //console.log(botMode);
+        console.log('this is transition:');
+        console.log(botMode);
         return botMode;
     }
 };
@@ -251,9 +258,12 @@ let JassBot = {
 async function fetchApiCardRequest(currentState) {
 
     try {
-        //console.log(`InFetch state::: ${JSON.stringify(currentState)}`);
-        console.log(currentState);
-        let response = await fetch('http://jass-agent.abiz.ch/tiresias/action_play_card', {
+        console.log('InFetch state for CARD:::');
+        console.log(JSON.stringify({currentState},null, 2));
+        //console.log(currentState);
+        // http://jass-agent.abiz.ch/theseus/action_play_card
+        // http://jass-agent.abiz.ch/tiresias/action_play_card
+        let response = await fetch('http://jass-agent.abiz.ch/theseus/action_play_card', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -277,9 +287,11 @@ async function fetchApiCardRequest(currentState) {
 async function fetchApiTrumpRequest(currentState) {
 
     try {
-     //console.log(`InFetch state::: ${JSON.stringify(currentState)}`);
-
-     let response = await fetch('http://jass-agent.abiz.ch/tiresias/action_trump', {
+     console.log('InFetch state for TRUMP');
+     console.log(JSON.stringify({currentState},null, 2));
+        // http://jass-agent.abiz.ch/theseus/action_trump
+        // http://jass-agent.abiz.ch/tiresias/action_trump
+     let response = await fetch('http://jass-agent.abiz.ch/theseus/action_trump', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'

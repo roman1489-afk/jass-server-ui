@@ -27,16 +27,23 @@ const Deck = {
 
 // Amount of rounds played gets tracked. See singleGameSession for amount of rounds the experiment lasts. E.g. 16
 let rounds = 0;
-
-// 1-4 are all preset games, if you want true random games, set to 5.
-let gameNumber = 3;
+let one = [];
+let two = [];
+let three = [];
+let four = [];
+let five = [];
+let six = [];
+let seven = [];
+let eight = [];
+// 1-2 are all preset games, if you want true random games, set to 3.
+let gameNumber = 1;
 
 
 export function create(seed = 0, oldDeckCards = null) {
 	let deck = Object.create(Deck);
 
 	//sort cards in a way, that we can assign certain patterns manually
-	deck.cards = _.sortBy(cards, ['number', 'color']);
+	//deck.cards = _.sortBy(cards, ['number', 'color']);
 
 	//console.log(deck.cards);
 	rounds++;
@@ -77,18 +84,26 @@ export function create(seed = 0, oldDeckCards = null) {
 	// deck.cards.push.apply(deck.cards, deck.cards.splice(0, 27));
 	switch(gameNumber){
 		case 1:
+
+			//sort cards in a way, that we can assign certain patterns manually
+			deck.cards = _.sortBy(cards, ['number', 'color']);
+
 			switch (rounds) {
 				case 1:
 					// game 1, round 1
 					helpSort(range(0,26), [22,21,17,35,11,7,16,24,22,27,15,35,33,27,24,20,22,28,24,34,24,24,22,31,31,27,29]);
 					break;
 				case 2:
+					//helpSort(range(0,26), [22,21,17,35,11,7,16,24,22,27,15,35,33,27,24,20,22,28,24,34,24,24,22,31,31,27,29]);
+					//shiftDeck(27);
 					helpSort(range(0,26), [32,24,12,4,28,22,25,17,21,12,10,14,18,26,24,18,28,31,22,33,26,34,27,23,27,27,26]);
 					break;
 				case 3:
 					helpSort(range(0,26), [35,27,19,15,7,33,16,8,35,31,30,26,22,18,30,25,22,35,21,21,35,34,22,34,26,34,27]);
 					break;
 				case 4:
+					//[31,23,19,20,34,29,13,9,29,20,20,15,24,29,34,34,19,23,32,19,30,26,22,32,30,25,26] test
+					//[27,15,11,33,29,17,15,22,14,20,16,29,14,26,15,35,23,20,31,22,33,26,20,28,35,29,34] normal
 					helpSort(range(0,26), [27,15,11,33,29,17,15,22,14,20,16,29,14,26,15,35,23,20,31,22,33,26,20,28,35,29,34]);
 					break;
 				case 5:
@@ -141,6 +156,10 @@ export function create(seed = 0, oldDeckCards = null) {
 			}
 			break;
 		case 2:
+
+			//sort cards in a way, that we can assign certain patterns manually
+			deck.cards = _.sortBy(cards, ['number', 'color']);
+
 			switch (rounds) {
 				case 1:
 					// game 2, round 1
@@ -205,8 +224,68 @@ export function create(seed = 0, oldDeckCards = null) {
 			}
 			break;
 		default:
-			deck.cards = _.shuffle(cards);
-			break;
+			switch (rounds) {
+				case 1:
+					deck.cards = _.shuffle(cards);
+					one = deck.cards;
+					break;
+				case 2:
+					deck.cards = _.shuffle(cards);
+					two = deck.cards;
+					break;
+				case 3:
+					deck.cards = _.shuffle(cards);
+					three = deck.cards;
+					break;
+				case 4:
+					deck.cards = _.shuffle(cards);
+					four = deck.cards;
+					break;
+				case 5:
+					deck.cards = _.shuffle(cards);
+					five = deck.cards;
+					break;
+				case 6:
+					deck.cards = _.shuffle(cards);
+					six = deck.cards;
+					break;
+				case 7:
+					deck.cards = _.shuffle(cards);
+					seven = deck.cards;
+					break;
+				case 8:
+					deck.cards = _.shuffle(cards);
+					eight = deck.cards;
+					break;
+				case 9:
+					deck.cards = arrayRotate(four.slice(), -9);
+					break;
+				case 10:
+					deck.cards = arrayRotate(five.slice(), -9);
+					break;
+				case 11:
+					deck.cards = arrayRotate(two.slice(), -9);
+					break;
+				case 12:
+					deck.cards = arrayRotate(seven.slice(), -9);
+					break;
+				case 13:
+					deck.cards = arrayRotate(eight.slice(), -9);
+					break;
+				case 14:
+					deck.cards = arrayRotate(one.slice(), -9);
+					break;
+				case 15:
+					deck.cards = arrayRotate(six.slice(), -9);
+					break;
+				case 16:
+					deck.cards = arrayRotate(three.slice(), -9);
+					break;
+				default:
+					deck.cards = _.shuffle(cards);
+					break;
+			}
+		break;
 	}
 			// Out commented is the random shuffle function, since we want preset games
 			/*
@@ -220,7 +299,7 @@ export function create(seed = 0, oldDeckCards = null) {
                     else
                         deck.cards = SeededShuffle.shuffle(cards, seed, true);
                 }*/
-			console.log(seed);
+			//console.log(seed);
 			console.log(deck.cards);
 			return deck;
 	}
