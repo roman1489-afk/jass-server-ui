@@ -49,9 +49,8 @@ let JassBot = {
             fetchApiCardRequest(this.gameState).then(data => {
                 this.botCard = data;
                 console.log(this.botCard);
-            });
 
-            delay(3000).then(() => {
+                delay(5).then(() => {
 
                 let correctCard = this.cardTransition(this.botCard);
                 let handCard2 = this.giveBotResponseCard(this.mapCardsFromJson(message.data), this.handcards, correctCard);
@@ -60,6 +59,7 @@ let JassBot = {
                 this.handcards.splice(this.handcards.indexOf(handCard2), 1);
                 let chooseCardResonse = messages.create(MessageType.CHOOSE_CARD.name, handCard2);
                 this.client.send(JSON.stringify(chooseCardResonse));
+                });
             });
         }
 
@@ -328,5 +328,6 @@ export function create(name, url = 'ws://localhost:3000', sessionName, teamToJoi
     clientBot.teamToJoin = teamToJoin;
     clientBot.gameType = GameType.create(GameMode.TRUMPF, CardColor.SPADES);
     clientBot.gameState = {};
+    clientBot.successResponse = true;
     return clientBot;
 }
