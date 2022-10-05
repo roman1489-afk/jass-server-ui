@@ -50,7 +50,7 @@ let JassBot = {
                 this.botCard = data;
                 console.log(this.botCard);
 
-                delay(5).then(() => {
+                delay(500).then(() => {
 
                 let correctCard = this.cardTransition(this.botCard);
                 let handCard2 = this.giveBotResponseCard(this.mapCardsFromJson(message.data), this.handcards, correctCard);
@@ -85,18 +85,18 @@ let JassBot = {
             fetchApiTrumpRequest(this.gameState).then(data => {
                 this.botTrump = data;
                 console.log(this.botTrump);
-            });
 
-            delay(2000).then(() => {
+                delay(1000).then(() => {
 
-                let correctTrump = this.trumpTransition(this.botTrump);
-                //console.log(correctTrump);
+                      let correctTrump = this.trumpTransition(this.botTrump);
+                      //console.log(correctTrump);
 
-                let botsChosenTrump = messages.create(MessageType.CHOOSE_TRUMPF.name, this.trumpTransition(this.botTrump));
-                //console.log(botsChosenTrump);
+                      let botsChosenTrump = messages.create(MessageType.CHOOSE_TRUMPF.name, this.trumpTransition(this.botTrump));
+                     //console.log(botsChosenTrump);
 
-                //let chooseTrumpfResponse = messages.create(MessageType.CHOOSE_TRUMPF.name, this.gameType);
-                this.client.send(JSON.stringify(botsChosenTrump));
+                     //let chooseTrumpfResponse = messages.create(MessageType.CHOOSE_TRUMPF.name, this.gameType);
+                     this.client.send(JSON.stringify(botsChosenTrump));
+                 });
             });
         }
 
