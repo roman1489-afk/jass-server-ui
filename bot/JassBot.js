@@ -263,8 +263,11 @@ async function fetchApiCardRequest(currentState) {
         //console.log(currentState);
         // http://jass-agent.abiz.ch/theseus/action_play_card
         // http://jass-agent.abiz.ch/tiresias/action_play_card
+        // https://jass-mcts-agent4-pe44yut7za-uc.a.run.app/dmcts_cnn/action_play_card
         let response = await fetch('http://jass-agent.abiz.ch/theseus/action_play_card', {
             method: 'POST',
+            retry: 5,
+            pause: 2000,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -291,8 +294,11 @@ async function fetchApiTrumpRequest(currentState) {
      console.log(JSON.stringify({currentState},null, 2));
         // http://jass-agent.abiz.ch/theseus/action_trump
         // http://jass-agent.abiz.ch/tiresias/action_trump
+        // https://jass-mcts-agent4-pe44yut7za-uc.a.run.app/dmcts_cnn/action_trump
      let response = await fetch('http://jass-agent.abiz.ch/theseus/action_trump', {
               method: 'POST',
+              retry: 5,
+              pause: 2000,
               headers: {
                 'Content-Type': 'application/json'
               },

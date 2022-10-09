@@ -36,7 +36,7 @@ let six = [];
 let seven = [];
 let eight = [];
 // 1-2 are all preset games, if you want true random games, set to 3.
-let gameNumber = 1;
+let gameNumber = 2;
 
 
 export function create(seed = 0, oldDeckCards = null) {
