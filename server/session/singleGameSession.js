@@ -249,7 +249,14 @@ const Session = {
 		this.teams[1].myRound++;
 
 		let players = this.players.slice();
-		let game = Game.create(players, this.maxPoints, this.players[nextStartingPlayer], this.clientApi, seed, this.oldDeckCards);
+		let game = Game.create(players, this.maxPoints, this.players[nextStartingPlayer], this.clientApi, seed, this.oldDeckCards, this.allRounds);
+
+
+		this.allRounds[(game.deck.getRounds-1)] = game.deckCards;
+
+		console.log('In session:')
+		console.log(this.allRounds);
+
 
 		if (this.orthogonalCardsEnabled) {
 			if (!this.oldDeckCards)
@@ -321,5 +328,6 @@ export function create(name, timeoutInMillis) {
 	session.isTournament = false;
 	session.finalizeRegistrationForPlayerFunctions = {};
 	session.joinBotListeners = [];
+	session.allRounds = [[], [], [], [], [], [], [], []];
 	return session;
 }

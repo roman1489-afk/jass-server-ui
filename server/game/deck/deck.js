@@ -27,25 +27,16 @@ const Deck = {
 
 // Amount of rounds played gets tracked. See singleGameSession for amount of rounds the experiment lasts. E.g. 16
 let rounds = 0;
-let one = [];
-let two = [];
-let three = [];
-let four = [];
-let five = [];
-let six = [];
-let seven = [];
-let eight = [];
+
 // 1-2 are all preset games, if you want true random games, set to 3.
-let gameNumber = 2;
+let gameNumber = 3;
 
 
-export function create(seed = 0, oldDeckCards = null) {
+export function create(seed = 0, oldDeckCards = null, allRounds){
 	let deck = Object.create(Deck);
 
 	//sort cards in a way, that we can assign certain patterns manually
 	//deck.cards = _.sortBy(cards, ['number', 'color']);
-
-	//console.log(deck.cards);
 	rounds++;
 
 	/**
@@ -227,59 +218,51 @@ export function create(seed = 0, oldDeckCards = null) {
 			switch (rounds) {
 				case 1:
 					deck.cards = _.shuffle(cards);
-					one = deck.cards;
 					break;
 				case 2:
 					deck.cards = _.shuffle(cards);
-					two = deck.cards;
 					break;
 				case 3:
 					deck.cards = _.shuffle(cards);
-					three = deck.cards;
 					break;
 				case 4:
 					deck.cards = _.shuffle(cards);
-					four = deck.cards;
 					break;
 				case 5:
 					deck.cards = _.shuffle(cards);
-					five = deck.cards;
 					break;
 				case 6:
 					deck.cards = _.shuffle(cards);
-					six = deck.cards;
 					break;
 				case 7:
 					deck.cards = _.shuffle(cards);
-					seven = deck.cards;
 					break;
 				case 8:
 					deck.cards = _.shuffle(cards);
-					eight = deck.cards;
 					break;
 				case 9:
-					deck.cards = arrayRotate(four.slice(), -9);
+					deck.cards = arrayRotate(allRounds[3].slice(), -9);
 					break;
 				case 10:
-					deck.cards = arrayRotate(five.slice(), -9);
+					deck.cards = arrayRotate(allRounds[4].slice(), -9);
 					break;
 				case 11:
-					deck.cards = arrayRotate(two.slice(), -9);
+					deck.cards = arrayRotate(allRounds[1].slice(), -9);
 					break;
 				case 12:
-					deck.cards = arrayRotate(seven.slice(), -9);
+					deck.cards = arrayRotate(allRounds[6].slice(), -9);
 					break;
 				case 13:
-					deck.cards = arrayRotate(eight.slice(), -9);
+					deck.cards = arrayRotate(allRounds[7].slice(), -9);
 					break;
 				case 14:
-					deck.cards = arrayRotate(one.slice(), -9);
+					deck.cards = arrayRotate(allRounds[0].slice(), -9);
 					break;
 				case 15:
-					deck.cards = arrayRotate(six.slice(), -9);
+					deck.cards = arrayRotate(allRounds[5].slice(), -9);
 					break;
 				case 16:
-					deck.cards = arrayRotate(three.slice(), -9);
+					deck.cards = arrayRotate(allRounds[2].slice(), -9);
 					break;
 				default:
 					deck.cards = _.shuffle(cards);

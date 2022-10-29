@@ -97,7 +97,7 @@ let Game = {
 	},
 };
 
-export function create(players, maxPoints, startPlayer, clientApi, seed = 0, oldDeckCards = null) {
+export function create(players, maxPoints, startPlayer, clientApi, seed = 0, oldDeckCards = null, allRounds) {
 	let game = Object.create(Game);
 	// the game now has a temporary gameState.
 	game.gameState = GameState.create();
@@ -105,14 +105,20 @@ export function create(players, maxPoints, startPlayer, clientApi, seed = 0, old
 	game.gameState.update('player', startPlayer.seatId);
 	game.gameState.update('dealer', startPlayer.seatId);
 	game.clientApi.broadcastGameState(game.gameState.getGameState);
-	game.deck = Deck.create(seed, oldDeckCards);
+	//game.deckOfRounds = [[], [], [], [], [], [], [], []];
+
+	game.deck = Deck.create(seed, oldDeckCards, allRounds);
 	game.deckCards = game.deck.cards.slice(); // Store copy for potential future use for orthogonal cards enabled mode
 	players.forEach(player => {
 		game.deck.deal(player, 9);
 	});
 	//console.log('TESTING DECK');
-	//console.log(game.deck);
+	//console.log(game.deck.cards);
 	//console.log(startPlayer);
+	//game.deckOfRounds[game.deck.getRounds-1] = game.deck.cards;
+	//console.log(game.deckOfRounds);
+	//console.log(game.deckOfRounds[game.deck.getRounds-1]);
+
 	game.gameState.update('cardDistribute', players);
 	game.clientApi.broadcastGameState(game.gameState.getGameState);
 	//console.log(startPlayer);
