@@ -48,14 +48,11 @@ let JassBot = {
             // }
             fetchApiCardRequest(this.gameState).then(data => {
                 this.botCard = data;
-                console.log(this.botCard);
 
                 delay(500).then(() => {
 
                 let correctCard = this.cardTransition(this.botCard);
                 let handCard2 = this.giveBotResponseCard(this.mapCardsFromJson(message.data), this.handcards, correctCard);
-
-                //let handCard = this.giveValidCardFromHand(this.mapCardsFromJson(message.data), this.handcards);
                 this.handcards.splice(this.handcards.indexOf(handCard2), 1);
                 let chooseCardResonse = messages.create(MessageType.CHOOSE_CARD.name, handCard2);
                 this.client.send(JSON.stringify(chooseCardResonse));
@@ -84,17 +81,11 @@ let JassBot = {
 
             fetchApiTrumpRequest(this.gameState).then(data => {
                 this.botTrump = data;
-                console.log(this.botTrump);
 
                 delay(1000).then(() => {
 
-                      let correctTrump = this.trumpTransition(this.botTrump);
-                      //console.log(correctTrump);
-
                       let botsChosenTrump = messages.create(MessageType.CHOOSE_TRUMPF.name, this.trumpTransition(this.botTrump));
-                     //console.log(botsChosenTrump);
 
-                     //let chooseTrumpfResponse = messages.create(MessageType.CHOOSE_TRUMPF.name, this.gameType);
                      this.client.send(JSON.stringify(botsChosenTrump));
                  });
             });
@@ -109,12 +100,11 @@ let JassBot = {
                 this.gameType = GameType.create(message.data.mode, message.data.trumpfColor);
             }
         }
-        //new if the gameState is Broadcasted
+        //new if the gameState is broadcasted it will update the gamestate that gets sent in the API-call to the agents
         if (message.type === MessageType.BROADCAST_GAMESTATE.name) {
             this.gameState = message.data;
         }
     },
-
     mapCardsFromJson(cards) {
         return cards.map((element) => {
             return Card.create(element.number, element.color);
@@ -122,6 +112,7 @@ let JassBot = {
     },
 
     giveValidCardFromHand(tableCards, handCards) {
+
         let validation = Validation.create(this.gameType.mode, this.gameType.trumpfColor);
 
         for (let i = 0; i < handCards.length; i++) {
@@ -141,15 +132,13 @@ let JassBot = {
      * @returns {*} card from handCards that matched the chosenCard
      */
     giveBotResponseCard(tableCards, handCards, chosenCard) {
+
         let validation = Validation.create(this.gameType.mode, this.gameType.trumpfColor);
-        //console.log('CARD CHOSEN: ');
-        //console.log(chosenCard);
+
         for (let i = 0; i < handCards.length; i++) {
             let handCard = handCards[i];
             if(handCard.number === chosenCard.number && handCard.color === chosenCard.color){
                 if (validation.validate(tableCards, handCards, handCard)) {
-                  //console.log('VALIDATED: ');
-                  //console.log(handCard);
                   return handCard;
                 }
             }
@@ -162,11 +151,11 @@ let JassBot = {
      * @returns {{number: number, color: string}} card in jass-server-ui format
      */
     cardTransition(response) {
+
         var finalCard = {
             'number': 5,
             'color': 'EMPTY'
         };
-
         let cardString = response.card;
         let [color, number] = [cardString.slice(0, 1), cardString.slice(1)];
 
@@ -186,7 +175,6 @@ let JassBot = {
             default:
                 break;
         }
-
         switch (number) {
             case 'A':
                 finalCard.number = 14;
@@ -231,21 +219,17 @@ let JassBot = {
                 botMode = GameType.create(GameMode.TRUMPF, CardColor.CLUBS);
                 break;
             case 4:
-                //strange to give a color when undeufe/obeabe.
                 botMode = GameType.create(GameMode.OBEABE, CardColor.SPADES);
                 break;
             case 5:
                 botMode = GameType.create(GameMode.UNDEUFE, CardColor.SPADES);
                 break
-            //schiebe
             case 10:
                 botMode = GameType.create(GameMode.SCHIEBE, CardColor.SPADES);
                 break;
             default:
                 break;
         }
-        console.log('this is transition:');
-        console.log(botMode);
         return botMode;
     }
 };
@@ -258,9 +242,6 @@ let JassBot = {
 async function fetchApiCardRequest(currentState) {
 
     try {
-        console.log('InFetch state for CARD:::');
-        console.log(JSON.stringify({currentState},null, 2));
-        //console.log(currentState);
         // http://jass-agent.abiz.ch/theseus/action_play_card
         // http://jass-agent.abiz.ch/tiresias/action_play_card
         // https://jass-mcts-agent4-pe44yut7za-uc.a.run.app/dmcts_cnn/action_play_card
@@ -275,12 +256,10 @@ async function fetchApiCardRequest(currentState) {
         });
         let data = await response.json();
         return data;
-
     } catch (e){
         console.log(e);
     }
 }
-
 
 /**
  * Fetches an API trump request to a bot.
@@ -290,8 +269,6 @@ async function fetchApiCardRequest(currentState) {
 async function fetchApiTrumpRequest(currentState) {
 
     try {
-     console.log('InFetch state for TRUMP');
-     console.log(JSON.stringify({currentState},null, 2));
         // http://jass-agent.abiz.ch/theseus/action_trump
         // http://jass-agent.abiz.ch/tiresias/action_trump
         // https://jass-mcts-agent4-pe44yut7za-uc.a.run.app/dmcts_cnn/action_trump
@@ -304,10 +281,8 @@ async function fetchApiTrumpRequest(currentState) {
               },
               body: JSON.stringify(currentState),
             });
-
      let data = await response.json();
      return data;
-
      } catch (e){
         console.log(e);
     }

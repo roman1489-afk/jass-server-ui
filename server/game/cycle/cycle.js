@@ -11,24 +11,15 @@ const Cycle = {
     iterate() {
         const handleChosenCard = (player, card) => {
             this.currentPlayer = player;
-
-            //console.log('UPDATE CORRECT PLAYER INSIDE CYCLE');
             this.gameState.update('playerInCycle', player.seatId);
 	        this.clientApi.broadcastGameState(this.gameState.getGameState);
-
-
 
             if (this.validator.validate(this.playedCards, this.currentPlayer.cards, card)) {
                 this.playedCards.push(card);
                 this.currentPlayer.removeCard(card);
                 this.clientApi.broadcastCardPlayed(this.playedCards);
-
-                //console.log('TESTING CARDS');
-                //console.log(card);
                 this.gameState.update('addCards', card);
-                //console.log('DONE ADD CARD TO TRICK');
                 this.gameState.update('reduceHand', card);
-                //console.log('DONE REDUCE HAND');
                 this.clientApi.broadcastGameState(this.gameState.getGameState);
 
             } else {
@@ -45,7 +36,7 @@ const Cycle = {
 
         const broadcastAndReturnWinner = (playedCards) => {
 
-            // visual delay for better gamefeeling of humasn players
+            // this is a visual delay for better gamefeeling of human players
             // cards will lay on the carpet for 2 seconds after a "stich" 
              delay(2000).then(() => {
                 console.log('worked');
@@ -56,8 +47,6 @@ const Cycle = {
             let loserTeam = getOtherTeam(winnerTeam);
             let actPoints = Counter.count(this.gameType.mode, this.gameType.trumpfColor, playedCards);
 
-            //console.log('TESTING ACT POINTS');
-            //console.log(actPoints);
             this.gameState.update('points', actPoints);
             this.clientApi.broadcastGameState(this.gameState.getGameState);
 

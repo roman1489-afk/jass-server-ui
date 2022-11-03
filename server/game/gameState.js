@@ -14,6 +14,24 @@ const GameState = {
     //   type: 'BROADCAST_TRUMPF',
     //   data: { mode: 'TRUMPF', trumpfColor: 'HEARTS' }
     // }
+    /*
+    Thomas BOT seatIds:
+    # Players (players are numbered clockwise), playing is done counterclockwise
+    # noinspection PyPep8
+    NORTH       = 0                         # type: int
+    EAST        = 1                         # type: int
+    SOUTH       = 2                         # type: int
+    WEST        = 3                         # type: int
+    MAX_PLAYER  = 3                         # type: int
+
+    UI iDs:
+    NORTH       = 2
+    EAST        = 1
+    SOUTH       = 0
+    WEST        = 3
+    MAX_PLAYER  = 3
+    => often have to "alibi-switch" player 1 and 3
+    */
     update: function update(type, message){
 
       switch(type) {
@@ -26,7 +44,6 @@ const GameState = {
           }
           if(message.mode === 'TRUMPF') {
             let color = JSON.parse(JSON.stringify(message.trumpfColor));
-            //let color = message.trumpfColor;
             switch(color){
               case 'DIAMONDS':
                 trump = 0;
@@ -137,7 +154,6 @@ const GameState = {
 
        case 'win':
 
-         //need to check if the order must be exactly as postman example. If not we can leave it like this.
           let temp = {};
           temp = tricks.pop();
 
@@ -175,9 +191,6 @@ const GameState = {
          let tempCard2 = JSON.parse(JSON.stringify(message));
          let cardToCut = cardTransition(tempCard2);
 
-         //console.log(`CARD TO DELETE: ${cardToCut}`);
-         //console.log(`WHOS HAND?: ${currentPlayer}`);
-
          //current player is already the next player => switch back to old player.
          let oldPlayer = currentPlayer -1 % 4;
          if(oldPlayer === -1){
@@ -191,7 +204,6 @@ const GameState = {
                  hand0.find((value, index) => {
                    if (value === `${cardToCut}`) {
                      hand0.splice(index, 1);
-                     //console.log(`DELETED CARD: ${cardToCut}`);
                    }
                  });
                  break;
@@ -199,7 +211,6 @@ const GameState = {
                  hand1.find((value, index) => {
                    if (value === `${cardToCut}`) {
                      hand1.splice(index, 1);
-                     //console.log(`DELETED CARD: ${cardToCut}`);
                    }
                  });
                  break;
@@ -207,7 +218,6 @@ const GameState = {
                  hand2.find((value, index) => {
                    if (value === `${cardToCut}`) {
                      hand2.splice(index, 1);
-                     //console.log(`DELETED CARD: ${cardToCut}`);
                    }
                  });
                  break;
@@ -215,7 +225,6 @@ const GameState = {
                  hand3.find((value, index) => {
                    if (value === `${cardToCut}`) {
                      hand3.splice(index, 1);
-                     //console.log(`DELETED CARD: ${cardToCut}`);
                    }
                  });
                  break;
@@ -223,7 +232,6 @@ const GameState = {
                  break;
              }
          }
-
          break;
 
        case 'points':
@@ -285,29 +293,8 @@ let version = 'V0.2';
 // UNE_UFE     = 5                         # type: int
 // U           = UNE_UFE
 // MAX_TRUMP   = 5
+
 let trump = -1;
-
-/*
-Thomas BOT seatIds:
-# Players (players are numbered clockwise), playing is done counterclockwise
-# noinspection PyPep8
-NORTH       = 0                         # type: int
-EAST        = 1                         # type: int
-SOUTH       = 2                         # type: int
-WEST        = 3                         # type: int
-MAX_PLAYER  = 3                         # type: int
-
-UI iDs:
-NORTH       = 2
-EAST        = 1
-SOUTH       = 0
-WEST        = 3
-MAX_PLAYER  = 3
-
-
-=> often have to "alibi-switch" player 1 and 3
-*/
-
 let dealer = 1;
 let currentPlayer = 0;
 let forehand = -1;
@@ -439,9 +426,7 @@ export function createExport(){
     default:
       myState = {'default': currentPlayer};
       break;
-
   }
-
   return myState;
 }
 
@@ -459,7 +444,6 @@ function handleCardToHands(hand = []){
   return finalHand;
 }
 
-//translate the cards from our setup into the one from thomas.
 /**
  * Translate the cards from our setup into the one from thomas
  * @param {json} card card to translate
@@ -504,7 +488,6 @@ function cardTransition(card){
       finalCard += `${number}`;
       break;
   }
-
   return finalCard;
 }
 

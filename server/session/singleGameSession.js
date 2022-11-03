@@ -5,7 +5,6 @@ import * as Advisor from '../game/player/advisor';
 import * as Team from '../game/player/team';
 import {SessionType} from '../../shared/session/sessionType';
 import SessionHandler from './sessionHandler';
-import {startJassTheRipperBot} from '../bot/botStarter';
 import {Logger} from '../logger';
 import EnvironmentUtil from '../registry/environmentUtil';
 import * as JsonResultProxy from '../communication/jsonResultProxy';
@@ -147,17 +146,6 @@ const Session = {
 		const player = createPlayer(this, webSocket, playerName, chosenTeamIndex, isHuman);
 		insertPlayer(this, player);
 		registerClientAndBroadcastSessionJoined(this, webSocket, player);
-
-		// why if isHuman we start a bot?
-		/*if (isHuman)
-			startJassTheRipperBot({
-				sessionName: this.name,
-				chosenTeamIndex: chosenTeamIndex,
-				advisedPlayerName: playerName
-			});*/
-
-		// Why does there have to be a joinBotListener for every player added?
-
 		this.joinBotListeners.push(this.clientApi.subscribeToJoiningBotsMessage(webSocket));
 	},
 

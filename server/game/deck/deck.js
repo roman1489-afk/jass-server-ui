@@ -33,10 +33,8 @@ let gameNumber = 3;
 
 
 export function create(seed = 0, oldDeckCards = null, allRounds){
-	let deck = Object.create(Deck);
 
-	//sort cards in a way, that we can assign certain patterns manually
-	//deck.cards = _.sortBy(cards, ['number', 'color']);
+	let deck = Object.create(Deck);
 	rounds++;
 
 	/**
@@ -85,16 +83,12 @@ export function create(seed = 0, oldDeckCards = null, allRounds){
 					helpSort(range(0,26), [22,21,17,35,11,7,16,24,22,27,15,35,33,27,24,20,22,28,24,34,24,24,22,31,31,27,29]);
 					break;
 				case 2:
-					//helpSort(range(0,26), [22,21,17,35,11,7,16,24,22,27,15,35,33,27,24,20,22,28,24,34,24,24,22,31,31,27,29]);
-					//shiftDeck(27);
 					helpSort(range(0,26), [32,24,12,4,28,22,25,17,21,12,10,14,18,26,24,18,28,31,22,33,26,34,27,23,27,27,26]);
 					break;
 				case 3:
 					helpSort(range(0,26), [35,27,19,15,7,33,16,8,35,31,30,26,22,18,30,25,22,35,21,21,35,34,22,34,26,34,27]);
 					break;
 				case 4:
-					//[31,23,19,20,34,29,13,9,29,20,20,15,24,29,34,34,19,23,32,19,30,26,22,32,30,25,26] test
-					//[27,15,11,33,29,17,15,22,14,20,16,29,14,26,15,35,23,20,31,22,33,26,20,28,35,29,34] normal
 					helpSort(range(0,26), [27,15,11,33,29,17,15,22,14,20,16,29,14,26,15,35,23,20,31,22,33,26,20,28,35,29,34]);
 					break;
 				case 5:
@@ -282,7 +276,6 @@ export function create(seed = 0, oldDeckCards = null, allRounds){
                     else
                         deck.cards = SeededShuffle.shuffle(cards, seed, true);
                 }*/
-			//console.log(seed);
 			console.log(deck.cards);
 			return deck;
 	}
