@@ -242,9 +242,6 @@ let JassBot = {
 async function fetchApiCardRequest(currentState) {
 
     try {
-        // http://jass-agent.abiz.ch/theseus/action_play_card
-        // http://jass-agent.abiz.ch/tiresias/action_play_card
-        // https://jass-mcts-agent4-pe44yut7za-uc.a.run.app/dmcts_cnn/action_play_card
         let response = await fetch('http://jass-agent2.abiz.ch/dmcts_dnn/action_play_card', {
             method: 'POST',
             retry: 5,
